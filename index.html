@@ -144,7 +144,7 @@
     font-size: 11.5px; color: var(--term-dim); letter-spacing: 0.08em;
   }
   .termbar .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--red); margin-right: 8px; vertical-align: -1px; }
-  .termbody { padding: 20px 22px 24px; font-size: 13.5px; line-height: 1.75; min-height: 300px; }
+  .termbody { padding: 20px 22px; font-size: 13.5px; line-height: 1.75; height: 320px; overflow: hidden; }
   .tline { white-space: pre-wrap; word-break: break-word; }
   .tprompt { color: var(--red); font-weight: 700; }
   .tcmd { color: var(--code-ink); font-weight: 700; }
@@ -165,7 +165,7 @@
   .termfoot { font-size: 12.5px; color: var(--rail); margin-top: 18px; max-width: 46em; }
 
   /* ---------- architecture map ---------- */
-  .archscroll { overflow-x: auto; padding-bottom: 8px; }
+  .archscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
   .archmap { min-width: 940px; width: 100%; height: auto; display: block; }
   .archmap text { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; fill: var(--ink); }
   .archmap .nodebox { fill: var(--panel); stroke: var(--ink); stroke-width: 1.5; }
@@ -213,7 +213,7 @@
   .ghostnote { font-size: 15px; max-width: 46em; margin-top: 32px; }
 
   /* ---------- flow line (install) ---------- */
-  .flowscroll { overflow-x: auto; padding-bottom: 8px; }
+  .flowscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
   .flow { min-width: 860px; position: relative; padding: 26px 0 0; }
   .track { position: relative; height: 4px; background: var(--ink); margin: 0 30px; }
   .traindot {
@@ -369,6 +369,27 @@
     .archmap .draw { stroke-dashoffset: 0 !important; transition: none !important; }
     .archmap .flowline { animation: none !important; opacity: 0.4 !important; }
     .archmap .fade, .rings .ring, .layer { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .termbody { height: auto; overflow: visible; }
+  }
+
+  /* ---------- mobile ---------- */
+  @media (max-width: 620px) {
+    .wrap { padding: 0 16px; }
+    section { padding: 46px 0; }
+    .privacy { padding: 40px 0; }
+    .topbar { flex-wrap: wrap; gap: 6px 12px; }
+    .topmeta { font-size: 9.5px; letter-spacing: 0.08em; }
+    .hero { padding: 40px 0 34px; }
+    .sechead { gap: 12px; margin-bottom: 14px; }
+    .seclede { font-size: 15px; margin-bottom: 30px; }
+    p.lede { font-size: 16px; }
+    .termbody { height: 300px; padding: 16px; font-size: 12.5px; }
+    .cstep { grid-template-columns: 88px 1fr; gap: 12px; }
+    .clabel { font-size: 11px; }
+    .cbar { font-size: 12px; padding: 0 12px; }
+    .member { padding: 22px 18px; }
+    .gitignore { font-size: 11.5px; }
+    .layer { grid-template-columns: 26px 1fr; gap: 12px; font-size: 13.5px; }
   }
 </style>
 
@@ -856,18 +877,14 @@ you soon.</div>
         })();
       }
       (function play() {
-        if (si >= SCENES.length) {
-          si = 0;
-          setTimeout(function () { body.innerHTML = ""; play(); }, 3600);
-          return;
-        }
+        if (si >= SCENES.length) { si = 0; }
         var sc = SCENES[si];
         si += 1;
+        body.innerHTML = "";
         typeCmd(sc, function () {
           setTimeout(function () {
             printOut(sc, function () {
-              body.scrollTop = body.scrollHeight;
-              setTimeout(play, 1900);
+              setTimeout(play, 2400);
             });
           }, 420);
         });
