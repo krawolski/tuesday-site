@@ -384,13 +384,10 @@
     <div>
       <div class="eyebrow stagger d1">A personal system for executives</div>
       <h1 class="stagger d2">Ten years from now: what does a normal <em>Tuesday</em> look like?</h1>
-      <p class="lede stagger d3">Not the day of the award gala, which happens once and photographs well, but the
-        ordinary Tuesday that happens five hundred times a decade and quietly is the decade. Most executives can
-        plan the next quarter to the hour and the next ten years not at all, which is a strange allocation of
-        precision, given which of the two decides where they wake up.</p>
-      <p class="lede stagger d3">Tuesday is a small, private AI staff that lives on your computer, learns who you
-        are, and refuses to let the long game dissolve into calendar noise. The wave that is currently rearranging
-        careers does not care whether you paddle. This is a board.</p>
+      <p class="lede stagger d3">Not the gala day, but the ordinary Tuesday that happens five hundred times a
+        decade and quietly is the decade. Tuesday is a private AI staff on your own computer: it learns who you
+        are, writes in your voice, guards your evenings, and keeps a ten-year plan wired to what you do this week.
+        The wave rearranging careers does not care whether you paddle. This is a board.</p>
       <div class="stagger d4 mono" style="font-size: 13px; color: var(--rail);">
         <span style="color: var(--red); font-weight: 700;">$</span> git clone · claude · /onboard
         &nbsp;&nbsp;installed in minutes, interviewed in an hour, yours for the decade
@@ -416,24 +413,18 @@
 
   <section>
     <div class="sechead"><span class="secnum mono">01</span><h2>The whole interface is a conversation</h2></div>
-    <p class="seclede">There is no app to learn and no dashboard to ignore. You open a terminal, you type, or you
-      simply <b>speak</b>, and the staff does what you asked: plans, drafts, logs, declines, reminds. With voice
-      switched on, Tuesday reads its answers back to you aloud, in English, Polish or German, whichever language
-      you happened to think in that day.</p>
+    <p class="seclede">No app, no dashboard. You type, or you simply <b>speak</b>, and the staff plans, drafts,
+      logs and declines; with voice on, Tuesday answers out loud in English, Polish or German.</p>
     <div class="term reveal">
       <div class="termbar mono"><span><span class="dot"></span>tuesday · claude</span><span id="termstate">live demo</span></div>
       <div class="termbody mono" id="termbody"></div>
     </div>
-    <p class="termfoot reveal">The demo above loops through one morning: a daily plan, a drafted email, and the
-      voice switch. Everything you see is a real feature, and nothing you see leaves the machine it runs on.</p>
   </section>
 
   <section>
     <div class="sechead"><span class="secnum mono">02</span><h2>The architecture, drawn honestly</h2></div>
-    <p class="seclede">Every architecture diagram in enterprise software has a cloud in it somewhere, usually where
-      your data goes to be monetized. This one has a frame instead. <b>Everything inside the frame is a file on
-      your computer.</b> Exactly two lines cross it: one carries your conversation to Claude under your own
-      account, the other pulls system updates in. Your data has no line. That is the design.</p>
+    <p class="seclede">Enterprise diagrams put a cloud where your data goes to be monetized; this one has a frame
+      instead, and <b>your data has no line that crosses it</b>.</p>
     <div class="archscroll">
       <svg class="archmap anim-scope" id="archmap" viewBox="0 0 1020 700" role="img"
            aria-label="Architecture map: everything runs inside your machine; the only external connections are the Claude API and git system updates; your data never leaves.">
@@ -470,29 +461,29 @@
 
         <!-- personas -->
         <g class="fade f3">
-          <rect class="chipbox" x="50" y="285" width="110" height="46"></rect>
-          <text class="chiptxt" x="105" y="313" text-anchor="middle">@cos</text>
-          <rect class="chipbox" x="165" y="285" width="110" height="46"></rect>
-          <text class="chiptxt" x="220" y="313" text-anchor="middle">@coach</text>
-          <rect class="chipbox" x="280" y="285" width="110" height="46"></rect>
-          <text class="chiptxt" x="335" y="313" text-anchor="middle">@ghost</text>
-          <rect class="chipbox" x="395" y="285" width="110" height="46"></rect>
-          <text class="chiptxt" x="450" y="313" text-anchor="middle">@life</text>
+          <rect class="chipbox" x="50" y="285" width="100" height="46"></rect>
+          <text class="chiptxt" x="100" y="313" text-anchor="middle">@cos</text>
+          <rect class="chipbox" x="160" y="285" width="100" height="46"></rect>
+          <text class="chiptxt" x="210" y="313" text-anchor="middle">@coach</text>
+          <rect class="chipbox" x="270" y="285" width="100" height="46"></rect>
+          <text class="chiptxt" x="320" y="313" text-anchor="middle">@ghost</text>
+          <rect class="chipbox" x="380" y="285" width="100" height="46"></rect>
+          <text class="chiptxt" x="430" y="313" text-anchor="middle">@life</text>
         </g>
 
         <!-- data vault -->
         <g class="fade f3">
-          <rect class="nodebox vault" x="500" y="255" width="160" height="240"></rect>
-          <text class="head" x="516" y="285">.data/</text>
-          <text class="redtxt" x="516" y="303">your private files</text>
-          <text class="filerow" x="516" y="331">profile.md</text>
-          <text class="filerow" x="516" y="351">vision.md</text>
-          <text class="filerow" x="516" y="371">stakeholders.md</text>
-          <rect x="516" y="381" width="8" height="8" fill="var(--red)"></rect>
-          <text class="filerow" x="530" y="389">family.md</text>
-          <text class="filerow" x="516" y="409">ghost-style.md</text>
-          <text class="filerow" x="516" y="429">plans + logs</text>
-          <text class="sub" x="516" y="457">plain text. yours.</text>
+          <rect class="nodebox vault" x="505" y="255" width="155" height="240"></rect>
+          <text class="head" x="521" y="285">.data/</text>
+          <text class="redtxt" x="521" y="303">your private files</text>
+          <text class="filerow" x="521" y="331">profile.md</text>
+          <text class="filerow" x="521" y="351">vision.md</text>
+          <text class="filerow" x="521" y="371">stakeholders.md</text>
+          <rect x="521" y="381" width="8" height="8" fill="var(--red)"></rect>
+          <text class="filerow" x="535" y="389">family.md</text>
+          <text class="filerow" x="521" y="409">ghost-style.md</text>
+          <text class="filerow" x="521" y="429">plans + logs</text>
+          <text class="sub" x="521" y="457">plain text. yours.</text>
         </g>
 
         <!-- drafts -->
@@ -521,35 +512,35 @@
         <path class="wire draw" pathLength="1" d="M200,167 L280,167" marker-end="url(#arr)"></path>
         <g class="wire draw w2" fill="none">
           <path pathLength="1" d="M385,215 L385,250"></path>
-          <path pathLength="1" d="M105,250 L450,250"></path>
-          <path pathLength="1" d="M105,250 L105,285"></path>
-          <path pathLength="1" d="M220,250 L220,285"></path>
-          <path pathLength="1" d="M335,250 L335,285"></path>
-          <path pathLength="1" d="M450,250 L450,285"></path>
+          <path pathLength="1" d="M100,250 L430,250"></path>
+          <path pathLength="1" d="M100,250 L100,285"></path>
+          <path pathLength="1" d="M210,250 L210,285"></path>
+          <path pathLength="1" d="M320,250 L320,285"></path>
+          <path pathLength="1" d="M430,250 L430,285"></path>
         </g>
-        <path class="wire draw w3" pathLength="1" d="M490,170 L580,170 L580,255" marker-end="url(#arr)"></path>
-        <path class="wire draw w4" pathLength="1" d="M335,331 L335,585" marker-end="url(#arr)"></path>
+        <path class="wire draw w3" pathLength="1" d="M490,170 L582,170 L582,255" marker-end="url(#arr)"></path>
+        <path class="wire draw w4" pathLength="1" d="M320,331 L320,585" marker-end="url(#arr)"></path>
         <path class="wire ext draw w4" pathLength="1" d="M490,140 L770,140"></path>
-        <path class="wire draw w5" pathLength="1" d="M770,580 L692,580" marker-end="url(#arr)"></path>
-        <path class="blocked draw w5" pathLength="1" d="M660,400 L760,505"></path>
+        <path class="wire draw w5" pathLength="1" d="M770,600 L692,600" marker-end="url(#arr)"></path>
+        <path class="blocked draw w5" pathLength="1" d="M582,495 L582,540 L764,540"></path>
         <g class="fade f5">
-          <line class="blockx" x1="698" y1="441" x2="722" y2="465"></line>
-          <line class="blockx" x1="722" y1="441" x2="698" y2="465"></line>
+          <line class="blockx" x1="658" y1="528" x2="682" y2="552"></line>
+          <line class="blockx" x1="682" y1="528" x2="658" y2="552"></line>
         </g>
 
         <!-- living signal overlays -->
         <path class="flowline" d="M200,167 L280,167"></path>
-        <path class="flowline" d="M385,215 L385,250 M105,250 L450,250"></path>
-        <path class="flowline" d="M490,170 L580,170 L580,255"></path>
-        <path class="flowline" d="M335,331 L335,585"></path>
+        <path class="flowline" d="M385,215 L385,250 M100,250 L430,250"></path>
+        <path class="flowline" d="M490,170 L582,170 L582,255"></path>
+        <path class="flowline" d="M320,331 L320,585"></path>
         <path class="flowline" d="M490,140 L770,140"></path>
 
         <!-- wire labels, kept clear of the lines -->
-        <text class="sub fade f3" x="585" y="238" text-anchor="middle">propose · confirm · save</text>
-        <text class="redtxt fade f4" x="630" y="128" text-anchor="middle">the only line out</text>
-        <text class="sub fade f5" x="700" y="602">git pull: updates in</text>
-        <text class="redtxt fade f5" x="712" y="425" text-anchor="middle">your data: never</text>
-        <text class="sub fade f4" x="348" y="470">drafts in your voice</text>
+        <text class="sub fade f3" x="572" y="213" text-anchor="end">propose · confirm · save</text>
+        <text class="redtxt fade f4" x="615" y="122" text-anchor="middle">the only line out</text>
+        <text class="sub fade f5" x="694" y="624">git pull: updates in</text>
+        <text class="redtxt fade f5" x="668" y="520" text-anchor="middle">your data: never</text>
+        <text class="sub fade f4" x="334" y="470">drafts in your voice</text>
 
         <!-- pulses -->
         <circle r="5" fill="var(--red)">
@@ -559,10 +550,10 @@
           <animateMotion dur="2.4s" repeatCount="indefinite" path="M200,167 L280,167"></animateMotion>
         </circle>
         <circle r="4" fill="var(--red)">
-          <animateMotion dur="2.8s" begin="0.9s" repeatCount="indefinite" path="M490,170 L580,170 L580,255"></animateMotion>
+          <animateMotion dur="2.8s" begin="0.9s" repeatCount="indefinite" path="M490,170 L582,170 L582,255"></animateMotion>
         </circle>
         <circle r="4" fill="var(--red)">
-          <animateMotion dur="3s" begin="1.6s" repeatCount="indefinite" path="M335,331 L335,585"></animateMotion>
+          <animateMotion dur="3s" begin="1.6s" repeatCount="indefinite" path="M320,331 L320,585"></animateMotion>
         </circle>
       </svg>
     </div>
@@ -570,11 +561,8 @@
 
   <section>
     <div class="sechead"><span class="secnum mono">03</span><h2>The ghost: AI that stops sounding like AI</h2></div>
-    <p class="seclede">A language model, left to its own devices, writes the most statistically probable sentence
-      available, and the most probable sentence belongs to nobody. That is why every unedited AI email in the world
-      sounds like the same polite fog. Tuesday's ghostwriter is trained the other way around: during onboarding it
-      studies your real sent messages, extracts what makes them yours, and then <b>writes like you, in every
-      language you use</b>, including the way you mix them.</p>
+    <p class="seclede">A model left alone writes the most probable sentence, and the most probable sentence belongs
+      to nobody; the ghost studies your real sent mail and <b>writes like you, in every language you use</b>.</p>
     <div class="ghostgrid reveal">
       <div class="gcol generic">
         <div class="gtag mono">any model, out of the box</div>
@@ -590,25 +578,23 @@ you soon.</div>
         <div class="gverdict mono">sounds like: <b>you, on a good day</b></div>
       </div>
     </div>
-    <p class="ghostnote reveal">The left column flickers because that is what it is: noise wearing a tie. The right
-      column comes from a style file built out of three of your real emails, a list of phrases you never use, and
-      the register you keep for each person. Every draft lands in <span class="mono">DRAFTS/</span> and waits.
-      Sending is a human act; it stays one.</p>
+    <p class="ghostnote reveal">Every draft waits in <span class="mono">DRAFTS/</span>. Sending is a human act,
+      and it stays one.</p>
   </section>
 
   <section>
     <div class="sechead"><span class="secnum mono">04</span><h2>From clone to twin, in one afternoon</h2></div>
-    <p class="seclede">Installation is a git clone, which is the whole trick: the system is a repository, so sharing
-      it, updating it and owning it are all the same, well-understood operation. The dot below is you.</p>
+    <p class="seclede">The system is a git repository, so installing, updating and owning it are the same
+      operation. The dot is you.</p>
     <div class="flowscroll">
       <div class="flow">
         <div class="track"><div class="traindot"></div></div>
         <div class="stations">
-          <div class="station"><div class="t mono">~2 min</div><div class="n">Clone</div><div class="d">git clone, run claude. No installer, no account, no vendor between you and your files.</div></div>
-          <div class="station"><div class="t mono">60–90 min</div><div class="n">/onboard</div><div class="d">A guided interview: career, stakeholders, ambitions, family, voice. It adapts its questions to your answers, and resumes where you stopped.</div></div>
-          <div class="station"><div class="t mono">private</div><div class="n">Your files</div><div class="d">Profile, vision, stakeholder map, voice rules. Plain text on your disk, excluded from git by design.</div></div>
-          <div class="station"><div class="t mono">4 personas</div><div class="n">The staff</div><div class="d">Chief of staff, career coach, ghostwriter, life planner. One trigger word each.</div></div>
-          <div class="station"><div class="t mono">daily</div><div class="n">Every day</div><div class="d">Priorities, meeting prep, drafts in your voice, wins quietly logged as promotion evidence.</div></div>
+          <div class="station"><div class="t mono">~2 min</div><div class="n">Clone</div><div class="d">git clone, run claude. Nothing else.</div></div>
+          <div class="station"><div class="t mono">60–90 min</div><div class="n">/onboard</div><div class="d">A guided interview that adapts and resumes.</div></div>
+          <div class="station"><div class="t mono">private</div><div class="n">Your files</div><div class="d">Plain text on your disk, out of git.</div></div>
+          <div class="station"><div class="t mono">4 personas</div><div class="n">The staff</div><div class="d">One trigger word each.</div></div>
+          <div class="station"><div class="t mono">daily</div><div class="n">Every day</div><div class="d">Prep, drafts, logged wins, guarded evenings.</div></div>
         </div>
       </div>
     </div>
@@ -620,33 +606,29 @@ you soon.</div>
       <div class="member reveal">
         <span class="trigger mono">@cos</span>
         <div class="role">Chief of Staff</div>
-        <div class="desc">Your daily operating partner. It reads the quarter plan before it reads your calendar,
-          which is why its idea of "important" survives contact with your inbox: the one to three things that
-          actually move a goal, meeting prep with a desired outcome, a weekly review that notices what stalled.</div>
+        <div class="desc">Reads the quarter plan before it reads your calendar, which is why its idea of
+          "important" survives contact with your inbox.</div>
         <div class="says">"Skip the 14:00, send the deck instead. Your quarter goal lives in the 15:30."</div>
       </div>
       <div class="member reveal">
         <span class="trigger mono">@coach</span>
         <div class="role">Career Coach</div>
-        <div class="desc">Holds the long arc so you do not have to hold it in working memory. It maps the gap to
-          your next role, builds the promotion case strictly from logged evidence, and once a quarter walks the
-          whole cascade from the ten-year picture down to what the last thirteen weeks actually did.</div>
+        <div class="desc">Holds the ten-year arc so you do not have to keep it in working memory, and builds the
+          promotion case strictly from logged evidence.</div>
         <div class="says">"Three logged wins this quarter. Your boss has seen one. Let's fix the other two."</div>
       </div>
       <div class="member reveal">
         <span class="trigger mono">@ghost</span>
         <div class="role">Ghost</div>
-        <div class="desc">Writes in your voice, learned from your real sent mail, in whichever of your languages the
-          recipient expects. It never invents a fact to fill a paragraph, and it never sends: every text is a draft
-          with your name on the send button.</div>
+        <div class="desc">Writes in your voice, learned from your real sent mail, and never sends: every text is a
+          draft with your name on the send button.</div>
         <div class="says">"Kept it firmer than usual. He ignored the first two deadlines."</div>
       </div>
       <div class="member reveal">
         <span class="trigger mono">@life</span>
         <div class="role">Life Planner</div>
-        <div class="desc">The half of the ten-year picture that is not a job title. It knows the non-negotiables,
-          defends the school play against the offsite before you have given the slot away, and argues the life side
-          of every big trade-off. Ties go to life; that rule is written down.</div>
+        <div class="desc">Defends the school play against the offsite before you have given the slot away. Ties go
+          to life; that rule is written down.</div>
         <div class="says">"That offsite collides with the school play. Here's the alternative before you say yes."</div>
       </div>
     </div>
@@ -672,18 +654,15 @@ you soon.</div>
       <div class="cstep"><div class="clabel mono">This year</div><div><div class="cbar">What has to happen in the next 12 months.</div></div></div>
       <div class="cstep"><div class="clabel mono">This quarter</div><div><div class="cbar">3–5 goals. Nothing else.</div></div></div>
     </div>
-    <p class="cnote">Most vision statements die in a drawer because nothing downstream depends on them. This one has
-      a staff: every quarter the coach walks the cascade top-down, asks whether the picture is still true, whether
-      the milestone moved, and what the last thirteen weeks actually bought you, then proposes the edits and waits
-      for your yes.</p>
+    <p class="cnote">Most visions die in a drawer because nothing downstream depends on them; this one has a staff
+      that walks the cascade every quarter and asks what the last thirteen weeks actually bought.</p>
   </section>
 
   <div class="privacy">
     <div class="wrap">
       <div class="sechead"><span class="secnum mono">08</span><h2>Nothing leaves. Nobody gets in.</h2></div>
-      <p class="privlede">Your ambitions, your family, your ten-year plan: plain text on your own disk. There is no
-        cloud copy, no vendor database, no server that could be breached, subpoenaed or sold. Five layers keep it
-        that way, and you can read every one of them in the source.</p>
+      <p class="privlede">Your ambitions, your family, your plan: plain text on your own disk, with no server
+        anywhere that could be breached, subpoenaed or sold.</p>
       <div class="privgrid2 anim-scope" id="rings">
         <svg class="rings" viewBox="0 0 480 480" role="img" aria-label="Five concentric security layers around your data files.">
           <circle class="ring r1" cx="240" cy="240" r="75"></circle>
@@ -702,11 +681,11 @@ you soon.</div>
           <text class="coresub mono" x="240" y="254" text-anchor="middle">your life, your disk</text>
         </svg>
         <div class="layers">
-          <div class="layer"><div class="no mono">1</div><div><b>Your disk, your files.</b> Plain text you can open, back up, move or delete yourself, with no database, no cloud account and no lock-in anywhere in the chain.</div></div>
-          <div class="layer l2"><div class="no mono">2</div><div><b>The git blockade.</b> <span class="mono">.gitignore</span> shuts your data out of every commit, so updates flow in and nothing flows out, even by accident, even yours.</div></div>
-          <div class="layer l3"><div class="no mono">3</div><div><b>Zero telemetry.</b> No analytics, no phone-home, no remote access, no vendor backend. What does not exist cannot leak.</div></div>
-          <div class="layer l4"><div class="no mono">4</div><div><b>Discretion rules.</b> The family file is never quoted into work contexts, and private facts never enter a draft that leaves the machine. This is written into the system's rules, not into a promise.</div></div>
-          <div class="layer l5"><div class="no mono">5</div><div><b>One guarded line out.</b> The only external call is Claude itself, under your own account and Anthropic's data policy, and you see every word before it goes.</div></div>
+          <div class="layer"><div class="no mono">1</div><div><b>Your disk, your files.</b> Plain text you can open, back up or delete yourself.</div></div>
+          <div class="layer l2"><div class="no mono">2</div><div><b>The git blockade.</b> Updates flow in; nothing flows out, even by accident.</div></div>
+          <div class="layer l3"><div class="no mono">3</div><div><b>Zero telemetry.</b> No backend, no phone-home. What does not exist cannot leak.</div></div>
+          <div class="layer l4"><div class="no mono">4</div><div><b>Discretion rules.</b> The family file never appears in a work context, ever.</div></div>
+          <div class="layer l5"><div class="no mono">5</div><div><b>One guarded line out.</b> Claude, under your own account, and you see every word.</div></div>
         </div>
       </div>
       <div class="gitignore mono">
@@ -726,11 +705,8 @@ you soon.</div>
       <b>$</b> cd tuesday &amp;&amp; claude<br>
       <b>&gt;</b> /onboard
     </div>
-    <p class="lede reveal" style="max-width: 40em; font-size: 16px;">One hour of honest questions, most of which
-      nobody has asked you since your last job interview, and one of which reaches ten years out. Then a chief of
-      staff, a career coach, a ghostwriter and a life planner, all of whom know exactly which Tuesday you are
-      building.</p>
-    <div class="foot mono reveal">TUESDAY · English &amp; Schweizer Hochdeutsch &amp; polski · built on Claude Code · your data stays yours</div>
+    <p class="lede reveal" style="max-width: 40em; font-size: 16px;">One hour of honest questions, one of which
+      reaches ten years out, and then a staff that knows exactly which Tuesday you are building.</p>
   </section>
 </div>
 
@@ -915,9 +891,10 @@ you soon.</div>
       }, 140);
     }
     var yours = document.getElementById("ghosttype");
-    var YOURS_TEXT = "Marek, three things, then I stop bothering you.\n\n" +
-      "The deadline holds. Not because I enjoy saying no, but because the line behind it does not move either.\n\n" +
-      "Send me the numbers by Thursday and I will handle the board myself.\n\n" +
+    var YOURS_TEXT = "Marek,\n\n" +
+      "The deadline stays.\n\n" +
+      "Send me the numbers by Thursday and the board is my problem, not yours. " +
+      "You're doing good work. Don't slow down now.\n\n" +
       "P.";
     if (yours && reduced) { yours.textContent = YOURS_TEXT; }
     else if (yours) {
