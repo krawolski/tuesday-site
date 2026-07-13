@@ -262,6 +262,78 @@
   .cta .codeblock b { color: var(--red); }
   .foot { font-size: 12px; color: var(--rail); letter-spacing: 0.05em; margin-top: 26px; }
 
+  /* ---------- architecture map ---------- */
+  .archscroll { overflow-x: auto; padding-bottom: 8px; }
+  .archmap { min-width: 900px; width: 100%; height: auto; display: block; }
+  .archmap text { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; fill: var(--ink); }
+  .archmap .nodebox { fill: var(--panel); stroke: var(--ink); stroke-width: 1.5; }
+  .archmap .vault { stroke-width: 2.5; }
+  .archmap .chipbox { fill: var(--chip-bg); }
+  .archmap .chiptxt { fill: var(--chip-ink); font-weight: 700; font-size: 12px; }
+  .archmap .head { font-weight: 700; font-size: 14px; }
+  .archmap .sub { fill: var(--rail); font-size: 10.5px; }
+  .archmap .filerow { font-size: 10.5px; }
+  .archmap .redtxt { fill: var(--red); font-weight: 700; }
+  .archmap .frame { fill: none; stroke: var(--ink); stroke-width: 3; }
+  .archmap .wire { stroke: var(--ink); stroke-width: 2; fill: none; }
+  .archmap .wire.ext { stroke-dasharray: 6 5; }
+  .archmap .wire.blocked { stroke: var(--red); stroke-dasharray: 4 4; }
+  .archmap .blockx { stroke: var(--red); stroke-width: 3.5; }
+  .archmap .draw { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.9s ease; }
+  .anim-scope.in .draw { stroke-dashoffset: 0; }
+  .anim-scope.in .draw.w2 { transition-delay: 0.3s; }
+  .anim-scope.in .draw.w3 { transition-delay: 0.6s; }
+  .anim-scope.in .draw.w4 { transition-delay: 0.9s; }
+  .anim-scope.in .draw.w5 { transition-delay: 1.2s; }
+  .archmap .fade { opacity: 0; transition: opacity 0.6s ease; }
+  .anim-scope.in .fade { opacity: 1; }
+  .anim-scope.in .fade.f2 { transition-delay: 0.35s; }
+  .anim-scope.in .fade.f3 { transition-delay: 0.7s; }
+  .anim-scope.in .fade.f4 { transition-delay: 1.05s; }
+  .anim-scope.in .fade.f5 { transition-delay: 1.4s; }
+
+  /* ---------- security rings ---------- */
+  .privlede { font-size: 16px; max-width: 44em; margin: -22px 0 42px; opacity: 0.75; }
+  .privgrid2 { display: grid; grid-template-columns: 380px 1fr; gap: 56px; align-items: center; }
+  .rings { width: 100%; height: auto; display: block; color: var(--paper); }
+  .rings .ring {
+    fill: none; stroke: currentColor; stroke-opacity: 0.4; stroke-width: 1;
+    transform-box: view-box; transform-origin: 50% 50%;
+    opacity: 0; transform: scale(0.55); transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .anim-scope.in .ring { opacity: 1; transform: none; }
+  .anim-scope.in .ring.r2 { transition-delay: 0.15s; }
+  .anim-scope.in .ring.r3 { transition-delay: 0.3s; }
+  .anim-scope.in .ring.r4 { transition-delay: 0.45s; }
+  .anim-scope.in .ring.r5 { transition-delay: 0.6s; }
+  .rings .ringno { fill: currentColor; opacity: 0.7; font-size: 11px; }
+  .rings .corebox { fill: none; stroke: currentColor; stroke-width: 1.5; }
+  .rings .coretxt { fill: currentColor; font-weight: 700; font-size: 15px; }
+  .rings .coresub { fill: currentColor; opacity: 0.65; font-size: 10.5px; }
+  .radar {
+    fill: none; stroke: var(--red); stroke-width: 2;
+    transform-box: view-box; transform-origin: 50% 50%;
+    animation: radar 3.4s ease-out infinite;
+  }
+  @keyframes radar {
+    0% { transform: scale(1); opacity: 0.9; }
+    100% { transform: scale(2.9); opacity: 0; }
+  }
+  .layers { display: flex; flex-direction: column; }
+  .layer {
+    display: grid; grid-template-columns: 30px 1fr; gap: 16px;
+    padding: 13px 0; border-bottom: 1px solid rgba(127, 127, 127, 0.35);
+    font-size: 14.5px; align-items: baseline;
+    opacity: 0; transform: translateX(16px); transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .anim-scope.in .layer { opacity: 1; transform: none; }
+  .anim-scope.in .layer.l2 { transition-delay: 0.15s; }
+  .anim-scope.in .layer.l3 { transition-delay: 0.3s; }
+  .anim-scope.in .layer.l4 { transition-delay: 0.45s; }
+  .anim-scope.in .layer.l5 { transition-delay: 0.6s; }
+  .layer .no { font-weight: 900; color: var(--red); font-size: 16px; }
+  .layer b { font-weight: 700; }
+
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.in { opacity: 1; transform: none; }
 
@@ -271,6 +343,8 @@
     .defstrip { grid-template-columns: 1fr 1fr; }
     .team { grid-template-columns: 1fr 1fr; }
     .privgrid { grid-template-columns: 1fr; }
+    .privgrid2 { grid-template-columns: 1fr; gap: 36px; }
+    .rings { max-width: 360px; margin: 0 auto; }
   }
   @media (max-width: 540px) {
     .team { grid-template-columns: 1fr; }
@@ -283,6 +357,9 @@
     .traindot { animation: none; left: 50%; }
     .cascade .cbar { transition: none; }
     .cascade.in .cstep .cbar { transition: none; }
+    .archmap .draw { stroke-dashoffset: 0 !important; transition: none !important; }
+    .archmap .fade, .rings .ring, .layer { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .radar { animation: none; opacity: 0; }
   }
 </style>
 
@@ -403,22 +480,162 @@
       Yours has a staff.</p>
   </section>
 
+  <section>
+    <div class="sechead"><span class="secnum mono">05</span><h2>The whole architecture, one map</h2></div>
+    <p class="seclede">Everything inside the frame lives on your computer. Only two lines cross it. Only one
+      of them ever carries your words, and you see every one of them.</p>
+    <div class="archscroll">
+      <svg class="archmap anim-scope" id="archmap" viewBox="0 0 1000 640" role="img"
+           aria-label="Architecture map: everything runs inside your machine; the only external connections are the Claude API and git system updates; your data never leaves.">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"></path>
+          </marker>
+        </defs>
+
+        <!-- the machine boundary -->
+        <rect class="frame fade" x="24" y="80" width="650" height="530"></rect>
+        <text class="head fade" x="36" y="64" style="fill: var(--red); font-size: 15px; letter-spacing: 3px;">YOUR MACHINE</text>
+        <text class="sub fade" x="230" y="64">nothing below this line has a server</text>
+
+        <!-- you -->
+        <g class="fade">
+          <rect class="nodebox" x="60" y="140" width="130" height="64"></rect>
+          <text class="head" x="125" y="168" text-anchor="middle">YOU</text>
+          <text class="sub" x="125" y="186" text-anchor="middle">the terminal</text>
+        </g>
+
+        <!-- core -->
+        <g class="fade f2">
+          <rect class="nodebox" x="270" y="140" width="190" height="84"></rect>
+          <text class="head" x="365" y="170" text-anchor="middle">TUESDAY CORE</text>
+          <text class="sub" x="365" y="188" text-anchor="middle">CLAUDE.md rules</text>
+          <text class="sub" x="365" y="203" text-anchor="middle">zero hallucination, draft-only</text>
+        </g>
+
+        <!-- personas -->
+        <g class="fade f3">
+          <rect class="chipbox" x="60" y="290" width="96" height="42"></rect>
+          <text class="chiptxt" x="108" y="316" text-anchor="middle">@cos</text>
+          <rect class="chipbox" x="170" y="290" width="96" height="42"></rect>
+          <text class="chiptxt" x="218" y="316" text-anchor="middle">@coach</text>
+          <rect class="chipbox" x="280" y="290" width="96" height="42"></rect>
+          <text class="chiptxt" x="328" y="316" text-anchor="middle">@ghost</text>
+          <rect class="chipbox" x="390" y="290" width="96" height="42"></rect>
+          <text class="chiptxt" x="438" y="316" text-anchor="middle">@life</text>
+        </g>
+
+        <!-- data vault -->
+        <g class="fade f3">
+          <rect class="nodebox vault" x="500" y="250" width="160" height="210"></rect>
+          <text class="head" x="516" y="280">.data/</text>
+          <text class="redtxt" x="516" y="298" style="font-size: 11px;">your private files</text>
+          <text class="filerow" x="516" y="326">profile.md</text>
+          <text class="filerow" x="516" y="346">vision.md</text>
+          <text class="filerow" x="516" y="366">stakeholders.md</text>
+          <rect x="516" y="376" width="8" height="8" fill="var(--red)"></rect>
+          <text class="filerow" x="530" y="384">family.md</text>
+          <text class="filerow" x="516" y="404">ghost-style.md</text>
+          <text class="filerow" x="516" y="424">plans + logs</text>
+          <text class="sub" x="516" y="446">plain text. yours.</text>
+        </g>
+
+        <!-- drafts -->
+        <g class="fade f4">
+          <rect class="nodebox" x="280" y="520" width="170" height="56"></rect>
+          <text class="head" x="365" y="544" text-anchor="middle">DRAFTS/</text>
+          <text class="sub" x="365" y="561" text-anchor="middle">you send. always you.</text>
+        </g>
+
+        <!-- outside: claude api -->
+        <g class="fade f4">
+          <rect class="nodebox" x="770" y="130" width="200" height="76"></rect>
+          <text class="head" x="870" y="160" text-anchor="middle">CLAUDE API</text>
+          <text class="sub" x="870" y="178" text-anchor="middle">your own account</text>
+          <text class="sub" x="870" y="193" text-anchor="middle">Anthropic data policy</text>
+        </g>
+
+        <!-- outside: git remote -->
+        <g class="fade f4">
+          <rect class="nodebox" x="770" y="440" width="200" height="76"></rect>
+          <text class="head" x="870" y="470" text-anchor="middle">GIT REMOTE</text>
+          <text class="sub" x="870" y="488" text-anchor="middle">system files only</text>
+        </g>
+
+        <!-- wires -->
+        <path class="wire draw" pathLength="1" d="M190,172 L270,172" marker-end="url(#arr)"></path>
+        <g class="wire draw w2" fill="none">
+          <path pathLength="1" d="M365,224 L365,255"></path>
+          <path pathLength="1" d="M108,255 L438,255"></path>
+          <path pathLength="1" d="M108,255 L108,290"></path>
+          <path pathLength="1" d="M218,255 L218,290"></path>
+          <path pathLength="1" d="M328,255 L328,290"></path>
+          <path pathLength="1" d="M438,255 L438,290"></path>
+        </g>
+        <path class="wire draw w3" pathLength="1" d="M460,168 L560,168 L560,250" marker-end="url(#arr)"></path>
+        <path class="wire draw w4" pathLength="1" d="M328,332 L328,520" marker-end="url(#arr)"></path>
+        <path class="wire ext draw w4" pathLength="1" d="M460,152 L770,152"></path>
+        <path class="wire draw w5" pathLength="1" d="M770,478 L690,478" marker-end="url(#arr)"></path>
+        <path class="wire blocked draw w5" pathLength="1" d="M660,380 L755,455"></path>
+        <g class="fade f5">
+          <line class="blockx" x1="700" y1="404" x2="722" y2="426"></line>
+          <line class="blockx" x1="722" y1="404" x2="700" y2="426"></line>
+        </g>
+
+        <!-- wire labels -->
+        <text class="sub fade f3" x="472" y="144">propose, confirm, save</text>
+        <text class="redtxt fade f4" x="540" y="140" style="font-size: 11px;">the only line out</text>
+        <text class="sub fade f5" x="700" y="470">git pull: updates in</text>
+        <text class="redtxt fade f5" x="618" y="368" style="font-size: 11px;">your data: never</text>
+        <text class="sub fade f4" x="342" y="440">drafts in your voice</text>
+
+        <!-- pulses -->
+        <circle r="5" fill="var(--red)">
+          <animateMotion dur="3.2s" repeatCount="indefinite" path="M460,152 L770,152 L460,152"></animateMotion>
+        </circle>
+        <circle r="4" fill="var(--red)">
+          <animateMotion dur="2.6s" repeatCount="indefinite" path="M190,172 L270,172"></animateMotion>
+        </circle>
+      </svg>
+    </div>
+  </section>
+
   <div class="privacy">
     <div class="wrap">
-      <div class="sechead"><span class="secnum mono">05</span><h2>Nothing leaves your machine</h2></div>
-      <div class="privgrid">
-        <ul class="privlist">
-          <li><b>Your answers live in plain text files on your disk</b>, excluded from git. Updates can never upload them.</li>
-          <li><b>No telemetry.</b> No analytics, no phone-home, no vendor peeking at your files.</li>
-          <li><b>The only external call is Claude itself</b>, under your own account.</li>
-          <li><b>Career ambitions and family context are radioactive.</b> Tuesday treats them that way: the family file is never quoted into work contexts, ever.</li>
-        </ul>
-        <div class="gitignore mono">
-          <span class="c"># .gitignore — the whole privacy model, visible</span><br>
-          <span class="r">.data/*</span> &nbsp;<span class="c"># your life, never committed</span><br>
-          <span class="r">DRAFTS/*</span> <span class="c"># your words, never committed</span><br>
-          <span class="c"># the system updates. your data stays.</span>
+      <div class="sechead"><span class="secnum mono">06</span><h2>Nothing leaves. Nobody gets in.</h2></div>
+      <p class="privlede">Your ambitions, your family, your ten-year plan: plain text on your own disk.
+        There is no cloud copy, no vendor database, no server that could be breached, subpoenaed or sold.
+        Five layers keep it that way.</p>
+      <div class="privgrid2 anim-scope" id="rings">
+        <svg class="rings" viewBox="0 0 480 480" role="img" aria-label="Five concentric security layers around your data files.">
+          <circle class="ring r1" cx="240" cy="240" r="75"></circle>
+          <circle class="ring r2" cx="240" cy="240" r="110"></circle>
+          <circle class="ring r3" cx="240" cy="240" r="145"></circle>
+          <circle class="ring r4" cx="240" cy="240" r="180"></circle>
+          <circle class="ring r5" cx="240" cy="240" r="213"></circle>
+          <circle class="radar" cx="240" cy="240" r="75"></circle>
+          <text class="ringno mono" x="240" y="176" text-anchor="middle">1</text>
+          <text class="ringno mono" x="240" y="141" text-anchor="middle">2</text>
+          <text class="ringno mono" x="240" y="106" text-anchor="middle">3</text>
+          <text class="ringno mono" x="240" y="71" text-anchor="middle">4</text>
+          <text class="ringno mono" x="240" y="38" text-anchor="middle">5</text>
+          <rect class="corebox" x="178" y="212" width="124" height="56"></rect>
+          <text class="coretxt mono" x="240" y="236" text-anchor="middle">.data/</text>
+          <text class="coresub mono" x="240" y="254" text-anchor="middle">your life, your disk</text>
+        </svg>
+        <div class="layers">
+          <div class="layer"><div class="no mono">1</div><div><b>Your disk, your files.</b> Plain text you can open, back up, move or delete yourself. No database, no cloud account, no lock-in.</div></div>
+          <div class="layer l2"><div class="no mono">2</div><div><b>The git blockade.</b> <span class="mono">.gitignore</span> shuts your data out of every commit. Updates flow in. Nothing flows out, even by accident.</div></div>
+          <div class="layer l3"><div class="no mono">3</div><div><b>Zero telemetry.</b> No analytics, no phone-home, no remote access, no vendor backend. What does not exist cannot leak.</div></div>
+          <div class="layer l4"><div class="no mono">4</div><div><b>Discretion rules.</b> The family file is never quoted into work contexts. Private facts never enter a draft that leaves the machine.</div></div>
+          <div class="layer l5"><div class="no mono">5</div><div><b>One guarded line out.</b> The only external call is Claude itself, under your own account and Anthropic's data policy. You see every word before it goes.</div></div>
         </div>
+      </div>
+      <div class="gitignore mono" style="margin-top: 42px;">
+        <span class="c"># .gitignore, the whole privacy model in four lines you can read</span><br>
+        <span class="r">.data/*</span> &nbsp;<span class="c"># your life, never committed</span><br>
+        <span class="r">DRAFTS/*</span> <span class="c"># your words, never committed</span><br>
+        <span class="c"># the system updates. your data stays.</span>
       </div>
     </div>
   </div>
@@ -485,7 +702,7 @@
         if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
       });
     }, { threshold: 0.18 });
-    document.querySelectorAll(".reveal, .row, #cascade").forEach(function (el) { io.observe(el); });
+    document.querySelectorAll(".reveal, .row, #cascade, .anim-scope").forEach(function (el) { io.observe(el); });
   })();
 </script>
 
