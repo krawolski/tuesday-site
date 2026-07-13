@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tuesday is a personal AI assistant and digital twin for executives, built on Claude Code. Installed from git, owned by you, private by design.">
+<meta property="og:title" content="Tuesday · the digital twin for executives">
+<meta property="og:description" content="Ten years from now, what does a normal Tuesday look like? A personal AI assistant team that holds your vision and works beside you every day.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%84%3C/text%3E%3C/svg%3E">
+<title>Tuesday · the digital twin for executives</title>
+<style>
+  :root {
+    --paper: #F2F3F1;
+    --ink: #14171A;
+    --red: #E30613;
+    --rail: #8A9096;
+    --hairline: rgba(20, 23, 26, 0.18);
+    --panel: #FFFFFF;
+    --panel-ink: #14171A;
+    --chip-bg: #14171A;
+    --chip-ink: #F2F3F1;
+    --code-bg: #14171A;
+    --code-ink: #E8EAE6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0F1113;
+      --ink: #ECEDEA;
+      --red: #FF4438;
+      --rail: #6E757C;
+      --hairline: rgba(236, 237, 234, 0.18);
+      --panel: #16191C;
+      --panel-ink: #ECEDEA;
+      --chip-bg: #ECEDEA;
+      --chip-ink: #0F1113;
+      --code-bg: #16191C;
+      --code-ink: #D9DBD6;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F2F3F1;
+    --ink: #14171A;
+    --red: #E30613;
+    --rail: #8A9096;
+    --hairline: rgba(20, 23, 26, 0.18);
+    --panel: #FFFFFF;
+    --panel-ink: #14171A;
+    --chip-bg: #14171A;
+    --chip-ink: #F2F3F1;
+    --code-bg: #14171A;
+    --code-ink: #E8EAE6;
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F1113;
+    --ink: #ECEDEA;
+    --red: #FF4438;
+    --rail: #6E757C;
+    --hairline: rgba(236, 237, 234, 0.18);
+    --panel: #16191C;
+    --panel-ink: #ECEDEA;
+    --chip-bg: #ECEDEA;
+    --chip-ink: #0F1113;
+    --code-bg: #16191C;
+    --code-ink: #D9DBD6;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 20px 0 14px; border-bottom: 2px solid var(--ink);
+  }
+  .wordmark { font-weight: 900; font-size: 20px; letter-spacing: 0.02em; }
+  .wordmark span { color: var(--red); }
+  .topmeta { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rail); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    display: grid; grid-template-columns: 1fr 300px; gap: 48px;
+    align-items: center; padding: 72px 0 64px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red); font-weight: 700; margin-bottom: 22px;
+  }
+  h1 {
+    font-size: clamp(34px, 5.4vw, 62px);
+    font-weight: 900; line-height: 1.04; letter-spacing: -0.015em;
+    margin: 0 0 26px; text-wrap: balance;
+  }
+  h1 em { font-style: normal; color: var(--red); }
+  .hero p.lede {
+    font-size: 18px; max-width: 34em; margin: 0 0 30px; color: var(--ink);
+  }
+  .hero .lede strong { font-weight: 700; }
+  .stagger { opacity: 0; transform: translateY(14px); animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+  .stagger.d1 { animation-delay: 0.05s; }
+  .stagger.d2 { animation-delay: 0.22s; }
+  .stagger.d3 { animation-delay: 0.42s; }
+  .stagger.d4 { animation-delay: 0.60s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  .installrow { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .codechip {
+    background: var(--code-bg); color: var(--code-ink);
+    padding: 10px 16px; font-size: 13px; white-space: nowrap;
+  }
+  .codechip b { color: var(--red); font-weight: 700; }
+  .langnote { font-size: 12px; color: var(--rail); letter-spacing: 0.06em; }
+
+  .clockbox { justify-self: end; }
+  .clockcap {
+    text-align: center; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--rail); margin-top: 14px;
+  }
+
+  /* ---------- definition strip ---------- */
+  .defstrip {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px;
+    padding: 34px 0; border-bottom: 1px solid var(--hairline); align-items: start;
+  }
+  .defstrip .what { font-size: 15px; max-width: 30em; }
+  .defstrip .what b { font-weight: 700; }
+  .claim .k { font-weight: 900; font-size: 16px; margin-bottom: 6px; }
+  .claim .v { font-size: 13px; color: var(--rail); }
+
+  /* ---------- sections ---------- */
+  section { padding: 72px 0; border-bottom: 1px solid var(--hairline); }
+  .sechead { display: flex; align-items: baseline; gap: 18px; margin-bottom: 40px; }
+  .secnum {
+    font-weight: 900; font-size: 13px; color: var(--red);
+    letter-spacing: 0.1em;
+  }
+  h2 { font-size: clamp(24px, 3.4vw, 38px); font-weight: 900; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  .seclede { font-size: 16px; max-width: 40em; margin: -22px 0 42px; color: var(--rail); }
+
+  /* ---------- flow line ---------- */
+  .flowscroll { overflow-x: auto; padding-bottom: 8px; }
+  .flow { min-width: 860px; position: relative; padding: 26px 0 0; }
+  .track { position: relative; height: 4px; background: var(--ink); margin: 0 30px; }
+  .traindot {
+    position: absolute; top: 50%; left: 0; width: 14px; height: 14px;
+    background: var(--red); border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: ride 9s linear infinite;
+  }
+  @keyframes ride {
+    0%   { left: 0%; }
+    22%  { left: 25%; }
+    27%  { left: 25%; }
+    47%  { left: 50%; }
+    52%  { left: 50%; }
+    72%  { left: 75%; }
+    77%  { left: 75%; }
+    97%  { left: 100%; }
+    100% { left: 100%; }
+  }
+  .stations { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: -9px; }
+  .station { position: relative; padding: 26px 14px 0 30px; }
+  .station::before {
+    content: ""; position: absolute; top: 0; left: 30px;
+    width: 14px; height: 14px; background: var(--paper);
+    border: 4px solid var(--ink); border-radius: 50%;
+    transform: translate(-50%, -50%); margin-top: 2px;
+  }
+  .station .t { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); font-weight: 700; }
+  .station .n { font-weight: 900; font-size: 18px; margin: 6px 0 6px; }
+  .station .d { font-size: 13px; color: var(--rail); max-width: 20em; }
+
+  /* ---------- team ---------- */
+  .team { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
+  .member {
+    background: var(--panel); color: var(--panel-ink);
+    padding: 26px 22px 24px; display: flex; flex-direction: column; gap: 12px;
+    transition: transform 0.25s ease;
+  }
+  .member:hover { transform: translateY(-4px); }
+  .trigger {
+    align-self: flex-start; font-size: 12px; font-weight: 700;
+    background: var(--chip-bg); color: var(--chip-ink); padding: 4px 9px;
+  }
+  .member:hover .trigger { background: var(--red); color: #fff; }
+  .member .role { font-weight: 900; font-size: 19px; line-height: 1.15; }
+  .member .desc { font-size: 13.5px; }
+  .member .says {
+    margin-top: auto; padding-top: 14px; border-top: 1px solid var(--hairline);
+    font-size: 12.5px; color: var(--rail); font-style: italic;
+  }
+
+  /* ---------- timetable ---------- */
+  .timetable { border-top: 2px solid var(--ink); }
+  .row {
+    display: grid; grid-template-columns: 90px 110px 1fr; gap: 20px;
+    padding: 18px 0; border-bottom: 1px solid var(--hairline); align-items: baseline;
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .row.in { opacity: 1; transform: none; }
+  .row .time { font-weight: 700; font-size: 15px; }
+  .row .who { font-size: 12px; font-weight: 700; color: var(--red); }
+  .row .what { font-size: 15px; }
+  .row .what i { color: var(--rail); font-style: normal; }
+  .row .what .ch { color: var(--red); font-weight: 700; font-style: italic; }
+
+  /* ---------- cascade ---------- */
+  .cascade { display: flex; flex-direction: column; gap: 14px; }
+  .cstep { display: grid; grid-template-columns: 130px 1fr; gap: 20px; align-items: center; }
+  .clabel { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .cbarwrap { background: transparent; }
+  .cbar {
+    height: 46px; background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; padding: 0 16px;
+    font-size: 13.5px; white-space: nowrap; overflow: hidden;
+    width: 0; transition: width 1.1s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .cstep:nth-child(4) .cbar { background: var(--red); color: #fff; }
+  .cascade.in .cstep:nth-child(1) .cbar { width: 100%; }
+  .cascade.in .cstep:nth-child(2) .cbar { width: 76%; transition-delay: 0.15s; }
+  .cascade.in .cstep:nth-child(3) .cbar { width: 52%; transition-delay: 0.3s; }
+  .cascade.in .cstep:nth-child(4) .cbar { width: 34%; transition-delay: 0.45s; }
+  .cnote { font-size: 14px; color: var(--rail); max-width: 42em; margin-top: 26px; }
+
+  /* ---------- privacy ---------- */
+  .privacy { background: var(--ink); color: var(--paper); padding: 56px 0; }
+  .privacy h2 { color: inherit; }
+  .privgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .privlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+  .privlist li { padding-left: 22px; position: relative; font-size: 15px; }
+  .privlist li::before { content: ""; position: absolute; left: 0; top: 8px; width: 10px; height: 10px; background: var(--red); }
+  .gitignore {
+    background: rgba(127, 127, 127, 0.12); border: 1px solid rgba(127, 127, 127, 0.35);
+    padding: 20px 22px; font-size: 13px; line-height: 1.8; overflow-x: auto;
+  }
+  .gitignore .c { opacity: 0.55; }
+  .gitignore .r { color: var(--red); font-weight: 700; }
+
+  /* ---------- cta ---------- */
+  .cta { text-align: left; padding: 84px 0 60px; border-bottom: none; }
+  .cta h2 { font-size: clamp(30px, 4.6vw, 52px); margin-bottom: 22px; }
+  .cta .codeblock {
+    background: var(--code-bg); color: var(--code-ink);
+    padding: 22px 26px; font-size: 14px; line-height: 1.9;
+    display: inline-block; margin: 8px 0 26px; overflow-x: auto; max-width: 100%;
+  }
+  .cta .codeblock b { color: var(--red); }
+  .foot { font-size: 12px; color: var(--rail); letter-spacing: 0.05em; margin-top: 26px; }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 36px; }
+    .clockbox { justify-self: start; }
+    .defstrip { grid-template-columns: 1fr 1fr; }
+    .team { grid-template-columns: 1fr 1fr; }
+    .privgrid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 540px) {
+    .team { grid-template-columns: 1fr; }
+    .defstrip { grid-template-columns: 1fr; gap: 22px; }
+    .row { grid-template-columns: 64px 1fr; }
+    .row .who { grid-column: 2; order: 3; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stagger, .reveal, .row { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+    .traindot { animation: none; left: 50%; }
+    .cascade .cbar { transition: none; }
+    .cascade.in .cstep .cbar { transition: none; }
+  }
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="wordmark">TUESDAY<span>.</span></div>
+    <div class="topmeta mono">EN · DE (CH) &nbsp;/&nbsp; runs on Claude Code &nbsp;/&nbsp; your machine only</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow stagger d1">A personal system for executives</div>
+      <h1 class="stagger d2">Ten years from now: what does a normal <em>Tuesday</em> look like?</h1>
+      <p class="lede stagger d3">Not the trophy day. The ordinary one. Where do you wake up, what work fills your
+        morning, who sits around the table in the evening? Careers are being rebuilt by AI right now.
+        You can watch the wave from the beach, get rolled by it, <strong>or grab a board.</strong></p>
+      <div class="installrow stagger d4">
+        <div class="codechip mono"><b>$</b> git clone &middot; claude &middot; /onboard</div>
+        <div class="langnote">Installed in minutes. Interviewed in an hour. Yours for the decade.</div>
+      </div>
+    </div>
+    <div class="clockbox stagger d3">
+      <svg id="clock" width="260" height="260" viewBox="0 0 200 200" role="img" aria-label="Swiss railway clock showing the current time">
+        <circle cx="100" cy="100" r="97" fill="var(--panel)" stroke="var(--ink)" stroke-width="5"></circle>
+        <g id="ticks"></g>
+        <g id="hands">
+          <rect id="hourhand" x="96.5" y="45" width="7" height="60" fill="var(--ink)"></rect>
+          <rect id="minhand" x="97.5" y="26" width="5" height="80" fill="var(--ink)"></rect>
+          <g id="sechand">
+            <rect x="99" y="38" width="2" height="70" fill="var(--red)"></rect>
+            <circle cx="100" cy="38" r="7" fill="var(--red)"></circle>
+          </g>
+        </g>
+        <circle cx="100" cy="100" r="4" fill="var(--ink)"></circle>
+      </svg>
+      <div class="clockcap">punctual, like everything else here</div>
+    </div>
+  </div>
+
+  <div class="defstrip">
+    <div class="what reveal"><b>Tuesday is a digital twin.</b> An AI assistant team that learns who you are,
+      where your career is going and what matters at home, then works beside you every single day.
+      Built on Claude Code. Installed from git. Shared as a repo, owned by you.</div>
+    <div class="claim reveal"><div class="k">Knows your voice</div><div class="v">Learns from your real sent emails. Drafts sound like you, not like AI.</div></div>
+    <div class="claim reveal"><div class="k">Holds your vision</div><div class="v">A 10-year picture, wired down to what you do this quarter.</div></div>
+    <div class="claim reveal"><div class="k">Guards your evenings</div><div class="v">Family non-negotiables are defended before you give the slot away.</div></div>
+  </div>
+
+  <section>
+    <div class="sechead"><span class="secnum mono">01</span><h2>From clone to twin, in one afternoon</h2></div>
+    <p class="seclede">Five stops. The dot is you.</p>
+    <div class="flowscroll">
+      <div class="flow">
+        <div class="track"><div class="traindot"></div></div>
+        <div class="stations">
+          <div class="station"><div class="t mono">~2 min</div><div class="n">Clone</div><div class="d">git clone, run claude. No installer, no account, no vendor.</div></div>
+          <div class="station"><div class="t mono">60–90 min</div><div class="n">/onboard</div><div class="d">A guided interview: career, stakeholders, ambitions, family, voice. Resumable anytime.</div></div>
+          <div class="station"><div class="t mono">private</div><div class="n">Your files</div><div class="d">Profile, vision, stakeholder map, voice rules. Plain text, on your disk, excluded from git.</div></div>
+          <div class="station"><div class="t mono">4 personas</div><div class="n">The team</div><div class="d">Chief of staff, career coach, ghostwriter, life planner. One trigger word each.</div></div>
+          <div class="station"><div class="t mono">daily</div><div class="n">Every day</div><div class="d">Priorities, meeting prep, drafts in your voice, wins logged as promotion evidence.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="secnum mono">02</span><h2>Four assistants. One boss: you.</h2></div>
+    <div class="team">
+      <div class="member reveal">
+        <span class="trigger mono">@cos</span>
+        <div class="role">Chief of Staff</div>
+        <div class="desc">Your daily driver. The 1–3 things that actually matter today, meeting prep with talking points, a weekly review every Friday.</div>
+        <div class="says">"Skip the 14:00, send the deck instead. Your quarter goal lives in the 15:30."</div>
+      </div>
+      <div class="member reveal">
+        <span class="trigger mono">@coach</span>
+        <div class="role">Career Coach</div>
+        <div class="desc">Holds the long arc. Maps the gap to your next role, builds the promotion case from logged evidence, runs the quarterly check-in against your vision.</div>
+        <div class="says">"Three logged wins this quarter. Your boss has seen one. Let's fix the other two."</div>
+      </div>
+      <div class="member reveal">
+        <span class="trigger mono">@ghost</span>
+        <div class="role">Ghost</div>
+        <div class="desc">Writes in your voice, learned from your real emails. Every text is a draft. Sending is always, only, yours.</div>
+        <div class="says">"Kept it firmer than usual. He ignored the first two deadlines."</div>
+      </div>
+      <div class="member reveal">
+        <span class="trigger mono">@life</span>
+        <div class="role">Life Planner</div>
+        <div class="desc">The half of the vision that isn't a job title. Family dates, energy, boundaries. Argues the life side of every big trade-off, and ties go to life.</div>
+        <div class="says">"That offsite collides with the school play. Here's the alternative before you say yes."</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="secnum mono">03</span><h2>A Tuesday with Tuesday</h2></div>
+    <div class="timetable mono">
+      <div class="row"><div class="time">07:30</div><div class="who">@cos</div><div class="what">Your day in one screen: two priorities tied to quarter goals, one meeting flagged as needing prep.</div></div>
+      <div class="row"><div class="time">08:50</div><div class="who">@cos</div><div class="what">Board-prep brief: what the CFO cares about, the open thread from last month, one desired outcome.</div></div>
+      <div class="row"><div class="time">11:40</div><div class="who">@ghost</div><div class="what">Difficult vendor email drafted in your tone. <i>You read, you edit, you send.</i></div></div>
+      <div class="row"><div class="time">14:15</div><div class="who">@coach</div><div class="what">The praise from the steering call is logged as promotion evidence. <i>Save? One keystroke.</i></div></div>
+      <div class="row"><div class="time">17:05</div><div class="who">@life</div><div class="what">Thursday 18:00 request declined in draft: it collides with a non-negotiable you set once, in the interview.</div></div>
+      <div class="row"><div class="time">22:47</div><div class="who">@life</div><div class="what">"Third time you promised ten more minutes. <span class="ch">Chum jetzt.</span>" <i>Water, bed. The file will wait.</i></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="secnum mono">04</span><h2>The vision is wired, not framed</h2></div>
+    <div class="cascade reveal" id="cascade">
+      <div class="cstep"><div class="clabel mono">10 years</div><div class="cbarwrap"><div class="cbar">The ordinary Tuesday you chose. Written in your own words.</div></div></div>
+      <div class="cstep"><div class="clabel mono">5 years</div><div class="cbarwrap"><div class="cbar">The milestones that must be true halfway.</div></div></div>
+      <div class="cstep"><div class="clabel mono">This year</div><div class="cbarwrap"><div class="cbar">What has to happen in the next 12 months.</div></div></div>
+      <div class="cstep"><div class="clabel mono">This quarter</div><div class="cbarwrap"><div class="cbar">3–5 goals. Nothing else.</div></div></div>
+    </div>
+    <p class="cnote">Every quarter, the coach walks the cascade top-down: is the picture still true, is the
+      milestone on track, did the last 13 weeks move it? Most people write a vision once and lose the file.
+      Yours has a staff.</p>
+  </section>
+
+  <div class="privacy">
+    <div class="wrap">
+      <div class="sechead"><span class="secnum mono">05</span><h2>Nothing leaves your machine</h2></div>
+      <div class="privgrid">
+        <ul class="privlist">
+          <li><b>Your answers live in plain text files on your disk</b>, excluded from git. Updates can never upload them.</li>
+          <li><b>No telemetry.</b> No analytics, no phone-home, no vendor peeking at your files.</li>
+          <li><b>The only external call is Claude itself</b>, under your own account.</li>
+          <li><b>Career ambitions and family context are radioactive.</b> Tuesday treats them that way: the family file is never quoted into work contexts, ever.</li>
+        </ul>
+        <div class="gitignore mono">
+          <span class="c"># .gitignore — the whole privacy model, visible</span><br>
+          <span class="r">.data/*</span> &nbsp;<span class="c"># your life, never committed</span><br>
+          <span class="r">DRAFTS/*</span> <span class="c"># your words, never committed</span><br>
+          <span class="c"># the system updates. your data stays.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="cta">
+    <div class="eyebrow reveal">The wave is here either way</div>
+    <h2 class="reveal">Grab the board.</h2>
+    <div class="codeblock mono reveal">
+      <b>$</b> git clone https://github.com/krawolski/tuesday.git<br>
+      <b>$</b> cd tuesday &amp;&amp; claude<br>
+      <b>&gt;</b> /onboard
+    </div>
+    <p class="lede reveal" style="max-width: 36em; font-size: 16px;">One hour of honest questions. Then a chief of staff, a career coach,
+      a ghostwriter and a life planner, who all know exactly which Tuesday you're building.</p>
+    <div class="foot mono reveal">TUESDAY · English &amp; Schweizer Hochdeutsch · built on Claude Code · your data stays yours</div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    // Railway-clock tick marks
+    var NS = "http://www.w3.org/2000/svg";
+    var ticks = document.getElementById("ticks");
+    for (var i = 0; i < 60; i += 1) {
+      var isHour = i % 5 === 0;
+      var t = document.createElementNS(NS, "rect");
+      t.setAttribute("x", isHour ? "97.25" : "98.6");
+      t.setAttribute("y", "8");
+      t.setAttribute("width", isHour ? "5.5" : "2.2");
+      t.setAttribute("height", isHour ? "22" : "9");
+      t.setAttribute("fill", "var(--ink)");
+      t.setAttribute("transform", "rotate(" + i * 6 + " 100 100)");
+      ticks.appendChild(t);
+    }
+
+    // Hands: minute and hour jump, second hand does the SBB sweep
+    // (full circle in ~58.5 s, then waits at 12 for the minute to catch up)
+    var hour = document.getElementById("hourhand");
+    var min = document.getElementById("minhand");
+    var sec = document.getElementById("sechand");
+    function setClock() {
+      var now = new Date();
+      var s = now.getSeconds() + now.getMilliseconds() / 1000;
+      var m = now.getMinutes();
+      var h = now.getHours() % 12;
+      var secAngle = Math.min(s / 58.5, 1) * 360;
+      var minAngle = (m + (s >= 59.5 ? 1 : 0)) * 6;
+      var hourAngle = h * 30 + m * 0.5;
+      hour.setAttribute("transform", "rotate(" + hourAngle + " 100 100)");
+      min.setAttribute("transform", "rotate(" + minAngle + " 100 100)");
+      sec.setAttribute("transform", "rotate(" + secAngle + " 100 100)");
+    }
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setClock();
+      setInterval(setClock, 1000);
+    } else {
+      (function frame() { setClock(); requestAnimationFrame(frame); })();
+    }
+
+    // Scroll reveals
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.18 });
+    document.querySelectorAll(".reveal, .row, #cascade").forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
