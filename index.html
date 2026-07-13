@@ -20,8 +20,10 @@
     --panel-ink: #14171A;
     --chip-bg: #14171A;
     --chip-ink: #F2F3F1;
-    --code-bg: #14171A;
+    --code-bg: #101214;
     --code-ink: #E8EAE6;
+    --term-dim: #8A9096;
+    --term-green: #38B26B;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -34,7 +36,7 @@
       --panel-ink: #ECEDEA;
       --chip-bg: #ECEDEA;
       --chip-ink: #0F1113;
-      --code-bg: #16191C;
+      --code-bg: #0B0D0E;
       --code-ink: #D9DBD6;
     }
   }
@@ -48,7 +50,7 @@
     --panel-ink: #14171A;
     --chip-bg: #14171A;
     --chip-ink: #F2F3F1;
-    --code-bg: #14171A;
+    --code-bg: #101214;
     --code-ink: #E8EAE6;
   }
   :root[data-theme="dark"] {
@@ -61,7 +63,7 @@
     --panel-ink: #ECEDEA;
     --chip-bg: #ECEDEA;
     --chip-ink: #0F1113;
-    --code-bg: #16191C;
+    --code-bg: #0B0D0E;
     --code-ink: #D9DBD6;
   }
 
@@ -71,14 +73,15 @@
     background: var(--paper);
     color: var(--ink);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    line-height: 1.45;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
   .mono {
     font-family: ui-monospace, "Cascadia Mono", Consolas, "IBM Plex Mono", monospace;
     font-variant-numeric: tabular-nums;
   }
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  #bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
   a { color: inherit; }
 
   /* ---------- top bar ---------- */
@@ -92,8 +95,8 @@
 
   /* ---------- hero ---------- */
   .hero {
-    display: grid; grid-template-columns: 1fr 300px; gap: 48px;
-    align-items: center; padding: 72px 0 64px;
+    display: grid; grid-template-columns: 1fr 280px; gap: 48px;
+    align-items: center; padding: 68px 0 56px;
     border-bottom: 1px solid var(--hairline);
   }
   .eyebrow {
@@ -101,57 +104,115 @@
     color: var(--red); font-weight: 700; margin-bottom: 22px;
   }
   h1 {
-    font-size: clamp(34px, 5.4vw, 62px);
-    font-weight: 900; line-height: 1.04; letter-spacing: -0.015em;
+    font-size: clamp(32px, 5vw, 58px);
+    font-weight: 900; line-height: 1.05; letter-spacing: -0.015em;
     margin: 0 0 26px; text-wrap: balance;
   }
   h1 em { font-style: normal; color: var(--red); }
-  .hero p.lede {
-    font-size: 18px; max-width: 34em; margin: 0 0 30px; color: var(--ink);
-  }
-  .hero .lede strong { font-weight: 700; }
+  p.lede { font-size: 17px; max-width: 38em; margin: 0 0 18px; }
   .stagger { opacity: 0; transform: translateY(14px); animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
   .stagger.d1 { animation-delay: 0.05s; }
   .stagger.d2 { animation-delay: 0.22s; }
   .stagger.d3 { animation-delay: 0.42s; }
   .stagger.d4 { animation-delay: 0.60s; }
   @keyframes rise { to { opacity: 1; transform: none; } }
-
-  .installrow { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-  .codechip {
-    background: var(--code-bg); color: var(--code-ink);
-    padding: 10px 16px; font-size: 13px; white-space: nowrap;
-  }
-  .codechip b { color: var(--red); font-weight: 700; }
-  .langnote { font-size: 12px; color: var(--rail); letter-spacing: 0.06em; }
-
   .clockbox { justify-self: end; }
   .clockcap {
     text-align: center; font-size: 11px; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--rail); margin-top: 14px;
   }
 
-  /* ---------- definition strip ---------- */
-  .defstrip {
-    display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px;
-    padding: 34px 0; border-bottom: 1px solid var(--hairline); align-items: start;
-  }
-  .defstrip .what { font-size: 15px; max-width: 30em; }
-  .defstrip .what b { font-weight: 700; }
-  .claim .k { font-weight: 900; font-size: 16px; margin-bottom: 6px; }
-  .claim .v { font-size: 13px; color: var(--rail); }
-
   /* ---------- sections ---------- */
-  section { padding: 72px 0; border-bottom: 1px solid var(--hairline); }
-  .sechead { display: flex; align-items: baseline; gap: 18px; margin-bottom: 40px; }
-  .secnum {
-    font-weight: 900; font-size: 13px; color: var(--red);
-    letter-spacing: 0.1em;
-  }
+  section { padding: 68px 0; border-bottom: 1px solid var(--hairline); position: relative; z-index: 1; }
+  .sechead { display: flex; align-items: baseline; gap: 18px; margin-bottom: 18px; }
+  .secnum { font-weight: 900; font-size: 13px; color: var(--red); letter-spacing: 0.1em; }
   h2 { font-size: clamp(24px, 3.4vw, 38px); font-weight: 900; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
-  .seclede { font-size: 16px; max-width: 40em; margin: -22px 0 42px; color: var(--rail); }
+  .seclede { font-size: 16px; max-width: 46em; margin: 0 0 40px; color: var(--rail); }
+  .seclede b { color: var(--ink); font-weight: 700; }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
 
-  /* ---------- flow line ---------- */
+  /* ---------- terminal ---------- */
+  .term {
+    background: var(--code-bg); color: var(--code-ink);
+    border: 1px solid var(--hairline); max-width: 860px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+  }
+  .termbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 16px; border-bottom: 1px solid rgba(127, 127, 127, 0.25);
+    font-size: 11.5px; color: var(--term-dim); letter-spacing: 0.08em;
+  }
+  .termbar .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--red); margin-right: 8px; vertical-align: -1px; }
+  .termbody { padding: 20px 22px 24px; font-size: 13.5px; line-height: 1.75; min-height: 300px; }
+  .tline { white-space: pre-wrap; word-break: break-word; }
+  .tprompt { color: var(--red); font-weight: 700; }
+  .tcmd { color: var(--code-ink); font-weight: 700; }
+  .tout { color: var(--term-dim); }
+  .tout .hl { color: var(--code-ink); }
+  .tok { color: var(--term-green); }
+  .cursor { display: inline-block; width: 8px; height: 16px; background: var(--red); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .wave { display: inline-flex; gap: 3px; align-items: flex-end; height: 18px; margin-left: 10px; vertical-align: -3px; }
+  .wave i { width: 3px; background: var(--term-green); animation: wavebar 0.9s ease-in-out infinite; }
+  .wave i:nth-child(1) { height: 6px; animation-delay: 0s; }
+  .wave i:nth-child(2) { height: 14px; animation-delay: 0.12s; }
+  .wave i:nth-child(3) { height: 9px; animation-delay: 0.24s; }
+  .wave i:nth-child(4) { height: 16px; animation-delay: 0.36s; }
+  .wave i:nth-child(5) { height: 7px; animation-delay: 0.48s; }
+  .wave i:nth-child(6) { height: 12px; animation-delay: 0.6s; }
+  @keyframes wavebar { 0%, 100% { transform: scaleY(0.4); } 50% { transform: scaleY(1); } }
+  .termfoot { font-size: 12.5px; color: var(--rail); margin-top: 18px; max-width: 46em; }
+
+  /* ---------- architecture map ---------- */
+  .archscroll { overflow-x: auto; padding-bottom: 8px; }
+  .archmap { min-width: 940px; width: 100%; height: auto; display: block; }
+  .archmap text { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; fill: var(--ink); }
+  .archmap .nodebox { fill: var(--panel); stroke: var(--ink); stroke-width: 1.5; }
+  .archmap .vault { stroke-width: 2.5; animation: vaultglow 4.5s ease-in-out infinite; }
+  @keyframes vaultglow { 0%, 100% { stroke: var(--ink); } 50% { stroke: var(--red); } }
+  .archmap .chipbox { fill: var(--chip-bg); }
+  .archmap .chiptxt { fill: var(--chip-ink); font-weight: 700; font-size: 13px; }
+  .archmap .head { font-weight: 700; font-size: 14px; }
+  .archmap .sub { fill: var(--rail); font-size: 10.5px; }
+  .archmap .filerow { font-size: 11px; }
+  .archmap .redtxt { fill: var(--red); font-weight: 700; font-size: 11px; }
+  .archmap .frame { fill: none; stroke: var(--ink); stroke-width: 3; }
+  .archmap .gridfill { fill: url(#gridpat); opacity: 0.5; }
+  .archmap .wire { stroke: var(--ink); stroke-width: 2; fill: none; }
+  .archmap .wire.ext { stroke-dasharray: 6 5; }
+  .archmap .flowline { stroke: var(--red); stroke-width: 2.5; fill: none; stroke-dasharray: 4 14; stroke-linecap: round; opacity: 0; transition: opacity 0.8s ease 1.4s; animation: dashflow 1s linear infinite; }
+  .anim-scope.in .flowline { opacity: 0.85; }
+  @keyframes dashflow { to { stroke-dashoffset: -18; } }
+  .archmap .blocked { stroke: var(--red); stroke-width: 2; stroke-dasharray: 5 5; fill: none; }
+  .archmap .blockx { stroke: var(--red); stroke-width: 4; animation: xblink 1.6s steps(1) infinite; }
+  @keyframes xblink { 50% { opacity: 0.25; } }
+  .archmap .draw { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.9s ease; }
+  .anim-scope.in .draw { stroke-dashoffset: 0; }
+  .anim-scope.in .draw.w2 { transition-delay: 0.25s; }
+  .anim-scope.in .draw.w3 { transition-delay: 0.5s; }
+  .anim-scope.in .draw.w4 { transition-delay: 0.75s; }
+  .anim-scope.in .draw.w5 { transition-delay: 1s; }
+  .archmap .fade { opacity: 0; transition: opacity 0.6s ease; }
+  .anim-scope.in .fade { opacity: 1; }
+  .anim-scope.in .fade.f2 { transition-delay: 0.3s; }
+  .anim-scope.in .fade.f3 { transition-delay: 0.6s; }
+  .anim-scope.in .fade.f4 { transition-delay: 0.9s; }
+  .anim-scope.in .fade.f5 { transition-delay: 1.2s; }
+
+  /* ---------- ghost / entropy ---------- */
+  .ghostgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
+  .gcol { background: var(--panel); color: var(--panel-ink); padding: 26px 24px 24px; }
+  .gcol .gtag { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
+  .gcol.generic .gtag { color: var(--rail); }
+  .gcol.yours .gtag { color: var(--red); }
+  .gsample { font-size: 14.5px; line-height: 1.75; min-height: 150px; white-space: pre-wrap; }
+  .gcol.generic .gsample { color: var(--rail); }
+  .gverdict { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--hairline); font-size: 12.5px; color: var(--rail); }
+  .gverdict b { color: var(--red); }
+  .ghostnote { font-size: 15px; max-width: 46em; margin-top: 32px; }
+
+  /* ---------- flow line (install) ---------- */
   .flowscroll { overflow-x: auto; padding-bottom: 8px; }
   .flow { min-width: 860px; position: relative; padding: 26px 0 0; }
   .track { position: relative; height: 4px; background: var(--ink); margin: 0 30px; }
@@ -162,15 +223,9 @@
     animation: ride 9s linear infinite;
   }
   @keyframes ride {
-    0%   { left: 0%; }
-    22%  { left: 25%; }
-    27%  { left: 25%; }
-    47%  { left: 50%; }
-    52%  { left: 50%; }
-    72%  { left: 75%; }
-    77%  { left: 75%; }
-    97%  { left: 100%; }
-    100% { left: 100%; }
+    0% { left: 0%; } 22% { left: 25%; } 27% { left: 25%; }
+    47% { left: 50%; } 52% { left: 50%; } 72% { left: 75%; }
+    77% { left: 75%; } 97% { left: 100%; } 100% { left: 100%; }
   }
   .stations { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: -9px; }
   .station { position: relative; padding: 26px 14px 0 30px; }
@@ -223,7 +278,6 @@
   .cascade { display: flex; flex-direction: column; gap: 14px; }
   .cstep { display: grid; grid-template-columns: 130px 1fr; gap: 20px; align-items: center; }
   .clabel { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-  .cbarwrap { background: transparent; }
   .cbar {
     height: 46px; background: var(--ink); color: var(--paper);
     display: flex; align-items: center; padding: 0 16px;
@@ -235,65 +289,12 @@
   .cascade.in .cstep:nth-child(2) .cbar { width: 76%; transition-delay: 0.15s; }
   .cascade.in .cstep:nth-child(3) .cbar { width: 52%; transition-delay: 0.3s; }
   .cascade.in .cstep:nth-child(4) .cbar { width: 34%; transition-delay: 0.45s; }
-  .cnote { font-size: 14px; color: var(--rail); max-width: 42em; margin-top: 26px; }
+  .cnote { font-size: 14.5px; color: var(--rail); max-width: 46em; margin-top: 26px; }
 
   /* ---------- privacy ---------- */
-  .privacy { background: var(--ink); color: var(--paper); padding: 56px 0; }
+  .privacy { background: var(--ink); color: var(--paper); padding: 56px 0; position: relative; z-index: 1; }
   .privacy h2 { color: inherit; }
-  .privgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-  .privlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
-  .privlist li { padding-left: 22px; position: relative; font-size: 15px; }
-  .privlist li::before { content: ""; position: absolute; left: 0; top: 8px; width: 10px; height: 10px; background: var(--red); }
-  .gitignore {
-    background: rgba(127, 127, 127, 0.12); border: 1px solid rgba(127, 127, 127, 0.35);
-    padding: 20px 22px; font-size: 13px; line-height: 1.8; overflow-x: auto;
-  }
-  .gitignore .c { opacity: 0.55; }
-  .gitignore .r { color: var(--red); font-weight: 700; }
-
-  /* ---------- cta ---------- */
-  .cta { text-align: left; padding: 84px 0 60px; border-bottom: none; }
-  .cta h2 { font-size: clamp(30px, 4.6vw, 52px); margin-bottom: 22px; }
-  .cta .codeblock {
-    background: var(--code-bg); color: var(--code-ink);
-    padding: 22px 26px; font-size: 14px; line-height: 1.9;
-    display: inline-block; margin: 8px 0 26px; overflow-x: auto; max-width: 100%;
-  }
-  .cta .codeblock b { color: var(--red); }
-  .foot { font-size: 12px; color: var(--rail); letter-spacing: 0.05em; margin-top: 26px; }
-
-  /* ---------- architecture map ---------- */
-  .archscroll { overflow-x: auto; padding-bottom: 8px; }
-  .archmap { min-width: 900px; width: 100%; height: auto; display: block; }
-  .archmap text { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; fill: var(--ink); }
-  .archmap .nodebox { fill: var(--panel); stroke: var(--ink); stroke-width: 1.5; }
-  .archmap .vault { stroke-width: 2.5; }
-  .archmap .chipbox { fill: var(--chip-bg); }
-  .archmap .chiptxt { fill: var(--chip-ink); font-weight: 700; font-size: 12px; }
-  .archmap .head { font-weight: 700; font-size: 14px; }
-  .archmap .sub { fill: var(--rail); font-size: 10.5px; }
-  .archmap .filerow { font-size: 10.5px; }
-  .archmap .redtxt { fill: var(--red); font-weight: 700; }
-  .archmap .frame { fill: none; stroke: var(--ink); stroke-width: 3; }
-  .archmap .wire { stroke: var(--ink); stroke-width: 2; fill: none; }
-  .archmap .wire.ext { stroke-dasharray: 6 5; }
-  .archmap .wire.blocked { stroke: var(--red); stroke-dasharray: 4 4; }
-  .archmap .blockx { stroke: var(--red); stroke-width: 3.5; }
-  .archmap .draw { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.9s ease; }
-  .anim-scope.in .draw { stroke-dashoffset: 0; }
-  .anim-scope.in .draw.w2 { transition-delay: 0.3s; }
-  .anim-scope.in .draw.w3 { transition-delay: 0.6s; }
-  .anim-scope.in .draw.w4 { transition-delay: 0.9s; }
-  .anim-scope.in .draw.w5 { transition-delay: 1.2s; }
-  .archmap .fade { opacity: 0; transition: opacity 0.6s ease; }
-  .anim-scope.in .fade { opacity: 1; }
-  .anim-scope.in .fade.f2 { transition-delay: 0.35s; }
-  .anim-scope.in .fade.f3 { transition-delay: 0.7s; }
-  .anim-scope.in .fade.f4 { transition-delay: 1.05s; }
-  .anim-scope.in .fade.f5 { transition-delay: 1.4s; }
-
-  /* ---------- security rings ---------- */
-  .privlede { font-size: 16px; max-width: 44em; margin: -22px 0 42px; opacity: 0.75; }
+  .privlede { font-size: 16px; max-width: 46em; margin: 0 0 42px; opacity: 0.75; }
   .privgrid2 { display: grid; grid-template-columns: 380px 1fr; gap: 56px; align-items: center; }
   .rings { width: 100%; height: auto; display: block; color: var(--paper); }
   .rings .ring {
@@ -315,10 +316,7 @@
     transform-box: view-box; transform-origin: 50% 50%;
     animation: radar 3.4s ease-out infinite;
   }
-  @keyframes radar {
-    0% { transform: scale(1); opacity: 0.9; }
-    100% { transform: scale(2.9); opacity: 0; }
-  }
+  @keyframes radar { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(2.9); opacity: 0; } }
   .layers { display: flex; flex-direction: column; }
   .layer {
     display: grid; grid-template-columns: 30px 1fr; gap: 16px;
@@ -333,56 +331,73 @@
   .anim-scope.in .layer.l5 { transition-delay: 0.6s; }
   .layer .no { font-weight: 900; color: var(--red); font-size: 16px; }
   .layer b { font-weight: 700; }
+  .gitignore {
+    background: rgba(127, 127, 127, 0.12); border: 1px solid rgba(127, 127, 127, 0.35);
+    padding: 20px 22px; font-size: 13px; line-height: 1.8; overflow-x: auto; margin-top: 42px;
+  }
+  .gitignore .c { opacity: 0.55; }
+  .gitignore .r { color: var(--red); font-weight: 700; }
 
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.in { opacity: 1; transform: none; }
+  /* ---------- cta ---------- */
+  .cta { text-align: left; padding: 84px 0 60px; border-bottom: none; }
+  .cta h2 { font-size: clamp(30px, 4.6vw, 52px); margin-bottom: 22px; }
+  .cta .codeblock {
+    background: var(--code-bg); color: var(--code-ink);
+    padding: 22px 26px; font-size: 14px; line-height: 1.9;
+    display: inline-block; margin: 8px 0 26px; overflow-x: auto; max-width: 100%;
+  }
+  .cta .codeblock b { color: var(--red); }
+  .foot { font-size: 12px; color: var(--rail); letter-spacing: 0.05em; margin-top: 26px; }
 
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; gap: 36px; }
     .clockbox { justify-self: start; }
-    .defstrip { grid-template-columns: 1fr 1fr; }
     .team { grid-template-columns: 1fr 1fr; }
-    .privgrid { grid-template-columns: 1fr; }
+    .ghostgrid { grid-template-columns: 1fr; }
     .privgrid2 { grid-template-columns: 1fr; gap: 36px; }
     .rings { max-width: 360px; margin: 0 auto; }
   }
   @media (max-width: 540px) {
     .team { grid-template-columns: 1fr; }
-    .defstrip { grid-template-columns: 1fr; gap: 22px; }
     .row { grid-template-columns: 64px 1fr; }
     .row .who { grid-column: 2; order: 3; }
   }
   @media (prefers-reduced-motion: reduce) {
     .stagger, .reveal, .row { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
-    .traindot { animation: none; left: 50%; }
-    .cascade .cbar { transition: none; }
-    .cascade.in .cstep .cbar { transition: none; }
+    .traindot, .cursor, .wave i, .radar, .archmap .vault, .archmap .blockx { animation: none !important; }
+    .cascade .cbar, .cascade.in .cstep .cbar { transition: none; }
     .archmap .draw { stroke-dashoffset: 0 !important; transition: none !important; }
+    .archmap .flowline { animation: none !important; opacity: 0.4 !important; }
     .archmap .fade, .rings .ring, .layer { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .radar { animation: none; opacity: 0; }
   }
 </style>
+
+<canvas id="bg" aria-hidden="true"></canvas>
 
 <div class="wrap">
   <div class="topbar">
     <div class="wordmark">TUESDAY<span>.</span></div>
-    <div class="topmeta mono">EN · DE (CH) &nbsp;/&nbsp; runs on Claude Code &nbsp;/&nbsp; your machine only</div>
+    <div class="topmeta mono">EN · DE (CH) · PL &nbsp;/&nbsp; runs on Claude Code &nbsp;/&nbsp; your machine only</div>
   </div>
 
   <div class="hero">
     <div>
       <div class="eyebrow stagger d1">A personal system for executives</div>
       <h1 class="stagger d2">Ten years from now: what does a normal <em>Tuesday</em> look like?</h1>
-      <p class="lede stagger d3">Not the trophy day. The ordinary one. Where do you wake up, what work fills your
-        morning, who sits around the table in the evening? Careers are being rebuilt by AI right now.
-        You can watch the wave from the beach, get rolled by it, <strong>or grab a board.</strong></p>
-      <div class="installrow stagger d4">
-        <div class="codechip mono"><b>$</b> git clone &middot; claude &middot; /onboard</div>
-        <div class="langnote">Installed in minutes. Interviewed in an hour. Yours for the decade.</div>
+      <p class="lede stagger d3">Not the day of the award gala, which happens once and photographs well, but the
+        ordinary Tuesday that happens five hundred times a decade and quietly is the decade. Most executives can
+        plan the next quarter to the hour and the next ten years not at all, which is a strange allocation of
+        precision, given which of the two decides where they wake up.</p>
+      <p class="lede stagger d3">Tuesday is a small, private AI staff that lives on your computer, learns who you
+        are, and refuses to let the long game dissolve into calendar noise. The wave that is currently rearranging
+        careers does not care whether you paddle. This is a board.</p>
+      <div class="stagger d4 mono" style="font-size: 13px; color: var(--rail);">
+        <span style="color: var(--red); font-weight: 700;">$</span> git clone · claude · /onboard
+        &nbsp;&nbsp;installed in minutes, interviewed in an hour, yours for the decade
       </div>
     </div>
     <div class="clockbox stagger d3">
-      <svg id="clock" width="260" height="260" viewBox="0 0 200 200" role="img" aria-label="Swiss railway clock showing the current time">
+      <svg id="clock" width="240" height="240" viewBox="0 0 200 200" role="img" aria-label="Swiss railway clock showing the current time">
         <circle cx="100" cy="100" r="97" fill="var(--panel)" stroke="var(--ink)" stroke-width="5"></circle>
         <g id="ticks"></g>
         <g id="hands">
@@ -399,64 +414,246 @@
     </div>
   </div>
 
-  <div class="defstrip">
-    <div class="what reveal"><b>Tuesday is a digital twin.</b> An AI assistant team that learns who you are,
-      where your career is going and what matters at home, then works beside you every single day.
-      Built on Claude Code. Installed from git. Shared as a repo, owned by you.</div>
-    <div class="claim reveal"><div class="k">Knows your voice</div><div class="v">Learns from your real sent emails. Drafts sound like you, not like AI.</div></div>
-    <div class="claim reveal"><div class="k">Holds your vision</div><div class="v">A 10-year picture, wired down to what you do this quarter.</div></div>
-    <div class="claim reveal"><div class="k">Guards your evenings</div><div class="v">Family non-negotiables are defended before you give the slot away.</div></div>
-  </div>
+  <section>
+    <div class="sechead"><span class="secnum mono">01</span><h2>The whole interface is a conversation</h2></div>
+    <p class="seclede">There is no app to learn and no dashboard to ignore. You open a terminal, you type, or you
+      simply <b>speak</b>, and the staff does what you asked: plans, drafts, logs, declines, reminds. With voice
+      switched on, Tuesday reads its answers back to you aloud, in English, Polish or German, whichever language
+      you happened to think in that day.</p>
+    <div class="term reveal">
+      <div class="termbar mono"><span><span class="dot"></span>tuesday · claude</span><span id="termstate">live demo</span></div>
+      <div class="termbody mono" id="termbody"></div>
+    </div>
+    <p class="termfoot reveal">The demo above loops through one morning: a daily plan, a drafted email, and the
+      voice switch. Everything you see is a real feature, and nothing you see leaves the machine it runs on.</p>
+  </section>
 
   <section>
-    <div class="sechead"><span class="secnum mono">01</span><h2>From clone to twin, in one afternoon</h2></div>
-    <p class="seclede">Five stops. The dot is you.</p>
+    <div class="sechead"><span class="secnum mono">02</span><h2>The architecture, drawn honestly</h2></div>
+    <p class="seclede">Every architecture diagram in enterprise software has a cloud in it somewhere, usually where
+      your data goes to be monetized. This one has a frame instead. <b>Everything inside the frame is a file on
+      your computer.</b> Exactly two lines cross it: one carries your conversation to Claude under your own
+      account, the other pulls system updates in. Your data has no line. That is the design.</p>
+    <div class="archscroll">
+      <svg class="archmap anim-scope" id="archmap" viewBox="0 0 1020 700" role="img"
+           aria-label="Architecture map: everything runs inside your machine; the only external connections are the Claude API and git system updates; your data never leaves.">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"></path>
+          </marker>
+          <pattern id="gridpat" width="24" height="24" patternUnits="userSpaceOnUse">
+            <path d="M24 0 H0 V24" fill="none" stroke="var(--hairline)" stroke-width="1"></path>
+          </pattern>
+        </defs>
+
+        <!-- machine boundary -->
+        <rect class="gridfill fade" x="20" y="80" width="650" height="590"></rect>
+        <rect class="frame fade" x="20" y="80" width="650" height="590"></rect>
+        <text class="head fade" x="32" y="62" style="fill: var(--red); font-size: 16px; letter-spacing: 3px;">YOUR MACHINE</text>
+        <text class="sub fade f2" x="240" y="62">nothing inside this frame has a server</text>
+        <text class="sub fade f5" x="32" y="656">everything here is a plain text file you can open, read and delete</text>
+
+        <!-- you -->
+        <g class="fade">
+          <rect class="nodebox" x="50" y="130" width="150" height="74"></rect>
+          <text class="head" x="125" y="162" text-anchor="middle">YOU</text>
+          <text class="sub" x="125" y="182" text-anchor="middle">keyboard or voice</text>
+        </g>
+
+        <!-- core -->
+        <g class="fade f2">
+          <rect class="nodebox" x="280" y="125" width="210" height="90"></rect>
+          <text class="head" x="385" y="155" text-anchor="middle">TUESDAY CORE</text>
+          <text class="sub" x="385" y="175" text-anchor="middle">CLAUDE.md · the rules</text>
+          <text class="sub" x="385" y="192" text-anchor="middle">zero hallucination · draft-only</text>
+        </g>
+
+        <!-- personas -->
+        <g class="fade f3">
+          <rect class="chipbox" x="50" y="285" width="110" height="46"></rect>
+          <text class="chiptxt" x="105" y="313" text-anchor="middle">@cos</text>
+          <rect class="chipbox" x="165" y="285" width="110" height="46"></rect>
+          <text class="chiptxt" x="220" y="313" text-anchor="middle">@coach</text>
+          <rect class="chipbox" x="280" y="285" width="110" height="46"></rect>
+          <text class="chiptxt" x="335" y="313" text-anchor="middle">@ghost</text>
+          <rect class="chipbox" x="395" y="285" width="110" height="46"></rect>
+          <text class="chiptxt" x="450" y="313" text-anchor="middle">@life</text>
+        </g>
+
+        <!-- data vault -->
+        <g class="fade f3">
+          <rect class="nodebox vault" x="500" y="255" width="160" height="240"></rect>
+          <text class="head" x="516" y="285">.data/</text>
+          <text class="redtxt" x="516" y="303">your private files</text>
+          <text class="filerow" x="516" y="331">profile.md</text>
+          <text class="filerow" x="516" y="351">vision.md</text>
+          <text class="filerow" x="516" y="371">stakeholders.md</text>
+          <rect x="516" y="381" width="8" height="8" fill="var(--red)"></rect>
+          <text class="filerow" x="530" y="389">family.md</text>
+          <text class="filerow" x="516" y="409">ghost-style.md</text>
+          <text class="filerow" x="516" y="429">plans + logs</text>
+          <text class="sub" x="516" y="457">plain text. yours.</text>
+        </g>
+
+        <!-- drafts -->
+        <g class="fade f4">
+          <rect class="nodebox" x="285" y="585" width="200" height="60"></rect>
+          <text class="head" x="385" y="610" text-anchor="middle">DRAFTS/</text>
+          <text class="sub" x="385" y="628" text-anchor="middle">you send. always you.</text>
+        </g>
+
+        <!-- outside: claude api -->
+        <g class="fade f4">
+          <rect class="nodebox" x="770" y="105" width="220" height="86"></rect>
+          <text class="head" x="880" y="137" text-anchor="middle">CLAUDE API</text>
+          <text class="sub" x="880" y="157" text-anchor="middle">your own account</text>
+          <text class="sub" x="880" y="173" text-anchor="middle">Anthropic data policy</text>
+        </g>
+
+        <!-- outside: git remote -->
+        <g class="fade f4">
+          <rect class="nodebox" x="770" y="540" width="220" height="80"></rect>
+          <text class="head" x="880" y="572" text-anchor="middle">GIT REMOTE</text>
+          <text class="sub" x="880" y="592" text-anchor="middle">system files only</text>
+        </g>
+
+        <!-- wires: draw-in skeleton -->
+        <path class="wire draw" pathLength="1" d="M200,167 L280,167" marker-end="url(#arr)"></path>
+        <g class="wire draw w2" fill="none">
+          <path pathLength="1" d="M385,215 L385,250"></path>
+          <path pathLength="1" d="M105,250 L450,250"></path>
+          <path pathLength="1" d="M105,250 L105,285"></path>
+          <path pathLength="1" d="M220,250 L220,285"></path>
+          <path pathLength="1" d="M335,250 L335,285"></path>
+          <path pathLength="1" d="M450,250 L450,285"></path>
+        </g>
+        <path class="wire draw w3" pathLength="1" d="M490,170 L580,170 L580,255" marker-end="url(#arr)"></path>
+        <path class="wire draw w4" pathLength="1" d="M335,331 L335,585" marker-end="url(#arr)"></path>
+        <path class="wire ext draw w4" pathLength="1" d="M490,140 L770,140"></path>
+        <path class="wire draw w5" pathLength="1" d="M770,580 L692,580" marker-end="url(#arr)"></path>
+        <path class="blocked draw w5" pathLength="1" d="M660,400 L760,505"></path>
+        <g class="fade f5">
+          <line class="blockx" x1="698" y1="441" x2="722" y2="465"></line>
+          <line class="blockx" x1="722" y1="441" x2="698" y2="465"></line>
+        </g>
+
+        <!-- living signal overlays -->
+        <path class="flowline" d="M200,167 L280,167"></path>
+        <path class="flowline" d="M385,215 L385,250 M105,250 L450,250"></path>
+        <path class="flowline" d="M490,170 L580,170 L580,255"></path>
+        <path class="flowline" d="M335,331 L335,585"></path>
+        <path class="flowline" d="M490,140 L770,140"></path>
+
+        <!-- wire labels, kept clear of the lines -->
+        <text class="sub fade f3" x="585" y="238" text-anchor="middle">propose · confirm · save</text>
+        <text class="redtxt fade f4" x="630" y="128" text-anchor="middle">the only line out</text>
+        <text class="sub fade f5" x="700" y="602">git pull: updates in</text>
+        <text class="redtxt fade f5" x="712" y="425" text-anchor="middle">your data: never</text>
+        <text class="sub fade f4" x="348" y="470">drafts in your voice</text>
+
+        <!-- pulses -->
+        <circle r="5" fill="var(--red)">
+          <animateMotion dur="3.4s" repeatCount="indefinite" path="M490,140 L770,140 L490,140"></animateMotion>
+        </circle>
+        <circle r="4" fill="var(--red)">
+          <animateMotion dur="2.4s" repeatCount="indefinite" path="M200,167 L280,167"></animateMotion>
+        </circle>
+        <circle r="4" fill="var(--red)">
+          <animateMotion dur="2.8s" begin="0.9s" repeatCount="indefinite" path="M490,170 L580,170 L580,255"></animateMotion>
+        </circle>
+        <circle r="4" fill="var(--red)">
+          <animateMotion dur="3s" begin="1.6s" repeatCount="indefinite" path="M335,331 L335,585"></animateMotion>
+        </circle>
+      </svg>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="secnum mono">03</span><h2>The ghost: AI that stops sounding like AI</h2></div>
+    <p class="seclede">A language model, left to its own devices, writes the most statistically probable sentence
+      available, and the most probable sentence belongs to nobody. That is why every unedited AI email in the world
+      sounds like the same polite fog. Tuesday's ghostwriter is trained the other way around: during onboarding it
+      studies your real sent messages, extracts what makes them yours, and then <b>writes like you, in every
+      language you use</b>, including the way you mix them.</p>
+    <div class="ghostgrid reveal">
+      <div class="gcol generic">
+        <div class="gtag mono">any model, out of the box</div>
+        <div class="gsample" id="entropy">I hope this email finds you well. I wanted to touch base regarding our
+previous discussion. Moving forward, I believe there are several exciting opportunities we could explore
+together. Please do not hesitate to reach out if you have any questions. Looking forward to hearing from
+you soon.</div>
+        <div class="gverdict mono">sounds like: everyone, and therefore no one</div>
+      </div>
+      <div class="gcol yours">
+        <div class="gtag mono">your ghost, after one hour of onboarding</div>
+        <div class="gsample" id="ghosttype"></div>
+        <div class="gverdict mono">sounds like: <b>you, on a good day</b></div>
+      </div>
+    </div>
+    <p class="ghostnote reveal">The left column flickers because that is what it is: noise wearing a tie. The right
+      column comes from a style file built out of three of your real emails, a list of phrases you never use, and
+      the register you keep for each person. Every draft lands in <span class="mono">DRAFTS/</span> and waits.
+      Sending is a human act; it stays one.</p>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="secnum mono">04</span><h2>From clone to twin, in one afternoon</h2></div>
+    <p class="seclede">Installation is a git clone, which is the whole trick: the system is a repository, so sharing
+      it, updating it and owning it are all the same, well-understood operation. The dot below is you.</p>
     <div class="flowscroll">
       <div class="flow">
         <div class="track"><div class="traindot"></div></div>
         <div class="stations">
-          <div class="station"><div class="t mono">~2 min</div><div class="n">Clone</div><div class="d">git clone, run claude. No installer, no account, no vendor.</div></div>
-          <div class="station"><div class="t mono">60–90 min</div><div class="n">/onboard</div><div class="d">A guided interview: career, stakeholders, ambitions, family, voice. Resumable anytime.</div></div>
-          <div class="station"><div class="t mono">private</div><div class="n">Your files</div><div class="d">Profile, vision, stakeholder map, voice rules. Plain text, on your disk, excluded from git.</div></div>
-          <div class="station"><div class="t mono">4 personas</div><div class="n">The team</div><div class="d">Chief of staff, career coach, ghostwriter, life planner. One trigger word each.</div></div>
-          <div class="station"><div class="t mono">daily</div><div class="n">Every day</div><div class="d">Priorities, meeting prep, drafts in your voice, wins logged as promotion evidence.</div></div>
+          <div class="station"><div class="t mono">~2 min</div><div class="n">Clone</div><div class="d">git clone, run claude. No installer, no account, no vendor between you and your files.</div></div>
+          <div class="station"><div class="t mono">60–90 min</div><div class="n">/onboard</div><div class="d">A guided interview: career, stakeholders, ambitions, family, voice. It adapts its questions to your answers, and resumes where you stopped.</div></div>
+          <div class="station"><div class="t mono">private</div><div class="n">Your files</div><div class="d">Profile, vision, stakeholder map, voice rules. Plain text on your disk, excluded from git by design.</div></div>
+          <div class="station"><div class="t mono">4 personas</div><div class="n">The staff</div><div class="d">Chief of staff, career coach, ghostwriter, life planner. One trigger word each.</div></div>
+          <div class="station"><div class="t mono">daily</div><div class="n">Every day</div><div class="d">Priorities, meeting prep, drafts in your voice, wins quietly logged as promotion evidence.</div></div>
         </div>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="sechead"><span class="secnum mono">02</span><h2>Four assistants. One boss: you.</h2></div>
+    <div class="sechead"><span class="secnum mono">05</span><h2>Four assistants. One boss: you.</h2></div>
     <div class="team">
       <div class="member reveal">
         <span class="trigger mono">@cos</span>
         <div class="role">Chief of Staff</div>
-        <div class="desc">Your daily driver. The 1–3 things that actually matter today, meeting prep with talking points, a weekly review every Friday.</div>
+        <div class="desc">Your daily operating partner. It reads the quarter plan before it reads your calendar,
+          which is why its idea of "important" survives contact with your inbox: the one to three things that
+          actually move a goal, meeting prep with a desired outcome, a weekly review that notices what stalled.</div>
         <div class="says">"Skip the 14:00, send the deck instead. Your quarter goal lives in the 15:30."</div>
       </div>
       <div class="member reveal">
         <span class="trigger mono">@coach</span>
         <div class="role">Career Coach</div>
-        <div class="desc">Holds the long arc. Maps the gap to your next role, builds the promotion case from logged evidence, runs the quarterly check-in against your vision.</div>
+        <div class="desc">Holds the long arc so you do not have to hold it in working memory. It maps the gap to
+          your next role, builds the promotion case strictly from logged evidence, and once a quarter walks the
+          whole cascade from the ten-year picture down to what the last thirteen weeks actually did.</div>
         <div class="says">"Three logged wins this quarter. Your boss has seen one. Let's fix the other two."</div>
       </div>
       <div class="member reveal">
         <span class="trigger mono">@ghost</span>
         <div class="role">Ghost</div>
-        <div class="desc">Writes in your voice, learned from your real emails. Every text is a draft. Sending is always, only, yours.</div>
+        <div class="desc">Writes in your voice, learned from your real sent mail, in whichever of your languages the
+          recipient expects. It never invents a fact to fill a paragraph, and it never sends: every text is a draft
+          with your name on the send button.</div>
         <div class="says">"Kept it firmer than usual. He ignored the first two deadlines."</div>
       </div>
       <div class="member reveal">
         <span class="trigger mono">@life</span>
         <div class="role">Life Planner</div>
-        <div class="desc">The half of the vision that isn't a job title. Family dates, energy, boundaries. Argues the life side of every big trade-off, and ties go to life.</div>
+        <div class="desc">The half of the ten-year picture that is not a job title. It knows the non-negotiables,
+          defends the school play against the offsite before you have given the slot away, and argues the life side
+          of every big trade-off. Ties go to life; that rule is written down.</div>
         <div class="says">"That offsite collides with the school play. Here's the alternative before you say yes."</div>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="sechead"><span class="secnum mono">03</span><h2>A Tuesday with Tuesday</h2></div>
+    <div class="sechead"><span class="secnum mono">06</span><h2>A Tuesday with Tuesday</h2></div>
     <div class="timetable mono">
       <div class="row"><div class="time">07:30</div><div class="who">@cos</div><div class="what">Your day in one screen: two priorities tied to quarter goals, one meeting flagged as needing prep.</div></div>
       <div class="row"><div class="time">08:50</div><div class="who">@cos</div><div class="what">Board-prep brief: what the CFO cares about, the open thread from last month, one desired outcome.</div></div>
@@ -468,144 +665,25 @@
   </section>
 
   <section>
-    <div class="sechead"><span class="secnum mono">04</span><h2>The vision is wired, not framed</h2></div>
+    <div class="sechead"><span class="secnum mono">07</span><h2>The vision is wired, not framed</h2></div>
     <div class="cascade reveal" id="cascade">
-      <div class="cstep"><div class="clabel mono">10 years</div><div class="cbarwrap"><div class="cbar">The ordinary Tuesday you chose. Written in your own words.</div></div></div>
-      <div class="cstep"><div class="clabel mono">5 years</div><div class="cbarwrap"><div class="cbar">The milestones that must be true halfway.</div></div></div>
-      <div class="cstep"><div class="clabel mono">This year</div><div class="cbarwrap"><div class="cbar">What has to happen in the next 12 months.</div></div></div>
-      <div class="cstep"><div class="clabel mono">This quarter</div><div class="cbarwrap"><div class="cbar">3–5 goals. Nothing else.</div></div></div>
+      <div class="cstep"><div class="clabel mono">10 years</div><div><div class="cbar">The ordinary Tuesday you chose. Written in your own words.</div></div></div>
+      <div class="cstep"><div class="clabel mono">5 years</div><div><div class="cbar">The milestones that must be true halfway.</div></div></div>
+      <div class="cstep"><div class="clabel mono">This year</div><div><div class="cbar">What has to happen in the next 12 months.</div></div></div>
+      <div class="cstep"><div class="clabel mono">This quarter</div><div><div class="cbar">3–5 goals. Nothing else.</div></div></div>
     </div>
-    <p class="cnote">Every quarter, the coach walks the cascade top-down: is the picture still true, is the
-      milestone on track, did the last 13 weeks move it? Most people write a vision once and lose the file.
-      Yours has a staff.</p>
-  </section>
-
-  <section>
-    <div class="sechead"><span class="secnum mono">05</span><h2>The whole architecture, one map</h2></div>
-    <p class="seclede">Everything inside the frame lives on your computer. Only two lines cross it. Only one
-      of them ever carries your words, and you see every one of them.</p>
-    <div class="archscroll">
-      <svg class="archmap anim-scope" id="archmap" viewBox="0 0 1000 640" role="img"
-           aria-label="Architecture map: everything runs inside your machine; the only external connections are the Claude API and git system updates; your data never leaves.">
-        <defs>
-          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"></path>
-          </marker>
-        </defs>
-
-        <!-- the machine boundary -->
-        <rect class="frame fade" x="24" y="80" width="650" height="530"></rect>
-        <text class="head fade" x="36" y="64" style="fill: var(--red); font-size: 15px; letter-spacing: 3px;">YOUR MACHINE</text>
-        <text class="sub fade" x="230" y="64">nothing below this line has a server</text>
-
-        <!-- you -->
-        <g class="fade">
-          <rect class="nodebox" x="60" y="140" width="130" height="64"></rect>
-          <text class="head" x="125" y="168" text-anchor="middle">YOU</text>
-          <text class="sub" x="125" y="186" text-anchor="middle">the terminal</text>
-        </g>
-
-        <!-- core -->
-        <g class="fade f2">
-          <rect class="nodebox" x="270" y="140" width="190" height="84"></rect>
-          <text class="head" x="365" y="170" text-anchor="middle">TUESDAY CORE</text>
-          <text class="sub" x="365" y="188" text-anchor="middle">CLAUDE.md rules</text>
-          <text class="sub" x="365" y="203" text-anchor="middle">zero hallucination, draft-only</text>
-        </g>
-
-        <!-- personas -->
-        <g class="fade f3">
-          <rect class="chipbox" x="60" y="290" width="96" height="42"></rect>
-          <text class="chiptxt" x="108" y="316" text-anchor="middle">@cos</text>
-          <rect class="chipbox" x="170" y="290" width="96" height="42"></rect>
-          <text class="chiptxt" x="218" y="316" text-anchor="middle">@coach</text>
-          <rect class="chipbox" x="280" y="290" width="96" height="42"></rect>
-          <text class="chiptxt" x="328" y="316" text-anchor="middle">@ghost</text>
-          <rect class="chipbox" x="390" y="290" width="96" height="42"></rect>
-          <text class="chiptxt" x="438" y="316" text-anchor="middle">@life</text>
-        </g>
-
-        <!-- data vault -->
-        <g class="fade f3">
-          <rect class="nodebox vault" x="500" y="250" width="160" height="210"></rect>
-          <text class="head" x="516" y="280">.data/</text>
-          <text class="redtxt" x="516" y="298" style="font-size: 11px;">your private files</text>
-          <text class="filerow" x="516" y="326">profile.md</text>
-          <text class="filerow" x="516" y="346">vision.md</text>
-          <text class="filerow" x="516" y="366">stakeholders.md</text>
-          <rect x="516" y="376" width="8" height="8" fill="var(--red)"></rect>
-          <text class="filerow" x="530" y="384">family.md</text>
-          <text class="filerow" x="516" y="404">ghost-style.md</text>
-          <text class="filerow" x="516" y="424">plans + logs</text>
-          <text class="sub" x="516" y="446">plain text. yours.</text>
-        </g>
-
-        <!-- drafts -->
-        <g class="fade f4">
-          <rect class="nodebox" x="280" y="520" width="170" height="56"></rect>
-          <text class="head" x="365" y="544" text-anchor="middle">DRAFTS/</text>
-          <text class="sub" x="365" y="561" text-anchor="middle">you send. always you.</text>
-        </g>
-
-        <!-- outside: claude api -->
-        <g class="fade f4">
-          <rect class="nodebox" x="770" y="130" width="200" height="76"></rect>
-          <text class="head" x="870" y="160" text-anchor="middle">CLAUDE API</text>
-          <text class="sub" x="870" y="178" text-anchor="middle">your own account</text>
-          <text class="sub" x="870" y="193" text-anchor="middle">Anthropic data policy</text>
-        </g>
-
-        <!-- outside: git remote -->
-        <g class="fade f4">
-          <rect class="nodebox" x="770" y="440" width="200" height="76"></rect>
-          <text class="head" x="870" y="470" text-anchor="middle">GIT REMOTE</text>
-          <text class="sub" x="870" y="488" text-anchor="middle">system files only</text>
-        </g>
-
-        <!-- wires -->
-        <path class="wire draw" pathLength="1" d="M190,172 L270,172" marker-end="url(#arr)"></path>
-        <g class="wire draw w2" fill="none">
-          <path pathLength="1" d="M365,224 L365,255"></path>
-          <path pathLength="1" d="M108,255 L438,255"></path>
-          <path pathLength="1" d="M108,255 L108,290"></path>
-          <path pathLength="1" d="M218,255 L218,290"></path>
-          <path pathLength="1" d="M328,255 L328,290"></path>
-          <path pathLength="1" d="M438,255 L438,290"></path>
-        </g>
-        <path class="wire draw w3" pathLength="1" d="M460,168 L560,168 L560,250" marker-end="url(#arr)"></path>
-        <path class="wire draw w4" pathLength="1" d="M328,332 L328,520" marker-end="url(#arr)"></path>
-        <path class="wire ext draw w4" pathLength="1" d="M460,152 L770,152"></path>
-        <path class="wire draw w5" pathLength="1" d="M770,478 L690,478" marker-end="url(#arr)"></path>
-        <path class="wire blocked draw w5" pathLength="1" d="M660,380 L755,455"></path>
-        <g class="fade f5">
-          <line class="blockx" x1="700" y1="404" x2="722" y2="426"></line>
-          <line class="blockx" x1="722" y1="404" x2="700" y2="426"></line>
-        </g>
-
-        <!-- wire labels -->
-        <text class="sub fade f3" x="472" y="144">propose, confirm, save</text>
-        <text class="redtxt fade f4" x="540" y="140" style="font-size: 11px;">the only line out</text>
-        <text class="sub fade f5" x="700" y="470">git pull: updates in</text>
-        <text class="redtxt fade f5" x="618" y="368" style="font-size: 11px;">your data: never</text>
-        <text class="sub fade f4" x="342" y="440">drafts in your voice</text>
-
-        <!-- pulses -->
-        <circle r="5" fill="var(--red)">
-          <animateMotion dur="3.2s" repeatCount="indefinite" path="M460,152 L770,152 L460,152"></animateMotion>
-        </circle>
-        <circle r="4" fill="var(--red)">
-          <animateMotion dur="2.6s" repeatCount="indefinite" path="M190,172 L270,172"></animateMotion>
-        </circle>
-      </svg>
-    </div>
+    <p class="cnote">Most vision statements die in a drawer because nothing downstream depends on them. This one has
+      a staff: every quarter the coach walks the cascade top-down, asks whether the picture is still true, whether
+      the milestone moved, and what the last thirteen weeks actually bought you, then proposes the edits and waits
+      for your yes.</p>
   </section>
 
   <div class="privacy">
     <div class="wrap">
-      <div class="sechead"><span class="secnum mono">06</span><h2>Nothing leaves. Nobody gets in.</h2></div>
-      <p class="privlede">Your ambitions, your family, your ten-year plan: plain text on your own disk.
-        There is no cloud copy, no vendor database, no server that could be breached, subpoenaed or sold.
-        Five layers keep it that way.</p>
+      <div class="sechead"><span class="secnum mono">08</span><h2>Nothing leaves. Nobody gets in.</h2></div>
+      <p class="privlede">Your ambitions, your family, your ten-year plan: plain text on your own disk. There is no
+        cloud copy, no vendor database, no server that could be breached, subpoenaed or sold. Five layers keep it
+        that way, and you can read every one of them in the source.</p>
       <div class="privgrid2 anim-scope" id="rings">
         <svg class="rings" viewBox="0 0 480 480" role="img" aria-label="Five concentric security layers around your data files.">
           <circle class="ring r1" cx="240" cy="240" r="75"></circle>
@@ -624,15 +702,15 @@
           <text class="coresub mono" x="240" y="254" text-anchor="middle">your life, your disk</text>
         </svg>
         <div class="layers">
-          <div class="layer"><div class="no mono">1</div><div><b>Your disk, your files.</b> Plain text you can open, back up, move or delete yourself. No database, no cloud account, no lock-in.</div></div>
-          <div class="layer l2"><div class="no mono">2</div><div><b>The git blockade.</b> <span class="mono">.gitignore</span> shuts your data out of every commit. Updates flow in. Nothing flows out, even by accident.</div></div>
+          <div class="layer"><div class="no mono">1</div><div><b>Your disk, your files.</b> Plain text you can open, back up, move or delete yourself, with no database, no cloud account and no lock-in anywhere in the chain.</div></div>
+          <div class="layer l2"><div class="no mono">2</div><div><b>The git blockade.</b> <span class="mono">.gitignore</span> shuts your data out of every commit, so updates flow in and nothing flows out, even by accident, even yours.</div></div>
           <div class="layer l3"><div class="no mono">3</div><div><b>Zero telemetry.</b> No analytics, no phone-home, no remote access, no vendor backend. What does not exist cannot leak.</div></div>
-          <div class="layer l4"><div class="no mono">4</div><div><b>Discretion rules.</b> The family file is never quoted into work contexts. Private facts never enter a draft that leaves the machine.</div></div>
-          <div class="layer l5"><div class="no mono">5</div><div><b>One guarded line out.</b> The only external call is Claude itself, under your own account and Anthropic's data policy. You see every word before it goes.</div></div>
+          <div class="layer l4"><div class="no mono">4</div><div><b>Discretion rules.</b> The family file is never quoted into work contexts, and private facts never enter a draft that leaves the machine. This is written into the system's rules, not into a promise.</div></div>
+          <div class="layer l5"><div class="no mono">5</div><div><b>One guarded line out.</b> The only external call is Claude itself, under your own account and Anthropic's data policy, and you see every word before it goes.</div></div>
         </div>
       </div>
-      <div class="gitignore mono" style="margin-top: 42px;">
-        <span class="c"># .gitignore, the whole privacy model in four lines you can read</span><br>
+      <div class="gitignore mono">
+        <span class="c"># .gitignore, the entire privacy model in four lines you can read yourself</span><br>
         <span class="r">.data/*</span> &nbsp;<span class="c"># your life, never committed</span><br>
         <span class="r">DRAFTS/*</span> <span class="c"># your words, never committed</span><br>
         <span class="c"># the system updates. your data stays.</span>
@@ -648,15 +726,19 @@
       <b>$</b> cd tuesday &amp;&amp; claude<br>
       <b>&gt;</b> /onboard
     </div>
-    <p class="lede reveal" style="max-width: 36em; font-size: 16px;">One hour of honest questions. Then a chief of staff, a career coach,
-      a ghostwriter and a life planner, who all know exactly which Tuesday you're building.</p>
-    <div class="foot mono reveal">TUESDAY · English &amp; Schweizer Hochdeutsch · built on Claude Code · your data stays yours</div>
+    <p class="lede reveal" style="max-width: 40em; font-size: 16px;">One hour of honest questions, most of which
+      nobody has asked you since your last job interview, and one of which reaches ten years out. Then a chief of
+      staff, a career coach, a ghostwriter and a life planner, all of whom know exactly which Tuesday you are
+      building.</p>
+    <div class="foot mono reveal">TUESDAY · English &amp; Schweizer Hochdeutsch &amp; polski · built on Claude Code · your data stays yours</div>
   </section>
 </div>
 
 <script>
   (function () {
-    // Railway-clock tick marks
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* ---------- railway clock ---------- */
     var NS = "http://www.w3.org/2000/svg";
     var ticks = document.getElementById("ticks");
     for (var i = 0; i < 60; i += 1) {
@@ -670,9 +752,6 @@
       t.setAttribute("transform", "rotate(" + i * 6 + " 100 100)");
       ticks.appendChild(t);
     }
-
-    // Hands: minute and hour jump, second hand does the SBB sweep
-    // (full circle in ~58.5 s, then waits at 12 for the minute to catch up)
     var hour = document.getElementById("hourhand");
     var min = document.getElementById("minhand");
     var sec = document.getElementById("sechand");
@@ -681,28 +760,186 @@
       var s = now.getSeconds() + now.getMilliseconds() / 1000;
       var m = now.getMinutes();
       var h = now.getHours() % 12;
-      var secAngle = Math.min(s / 58.5, 1) * 360;
-      var minAngle = (m + (s >= 59.5 ? 1 : 0)) * 6;
-      var hourAngle = h * 30 + m * 0.5;
-      hour.setAttribute("transform", "rotate(" + hourAngle + " 100 100)");
-      min.setAttribute("transform", "rotate(" + minAngle + " 100 100)");
-      sec.setAttribute("transform", "rotate(" + secAngle + " 100 100)");
+      hour.setAttribute("transform", "rotate(" + (h * 30 + m * 0.5) + " 100 100)");
+      min.setAttribute("transform", "rotate(" + (m + (s >= 59.5 ? 1 : 0)) * 6 + " 100 100)");
+      sec.setAttribute("transform", "rotate(" + Math.min(s / 58.5, 1) * 360 + " 100 100)");
     }
-    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      setClock();
-      setInterval(setClock, 1000);
-    } else {
-      (function frame() { setClock(); requestAnimationFrame(frame); })();
-    }
+    if (reduced) { setClock(); setInterval(setClock, 1000); }
+    else { (function frame() { setClock(); requestAnimationFrame(frame); })(); }
 
-    // Scroll reveals
+    /* ---------- scroll reveals ---------- */
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
       });
-    }, { threshold: 0.18 });
+    }, { threshold: 0.15 });
     document.querySelectorAll(".reveal, .row, #cascade, .anim-scope").forEach(function (el) { io.observe(el); });
+
+    /* ---------- background: drifting swiss confetti ---------- */
+    var canvas = document.getElementById("bg");
+    if (canvas && !reduced) {
+      var ctx = canvas.getContext("2d");
+      var parts = [];
+      function sizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      sizeCanvas();
+      window.addEventListener("resize", sizeCanvas);
+      for (var p = 0; p < 70; p += 1) {
+        parts.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          v: 0.15 + Math.random() * 0.45,
+          s: 2 + Math.random() * 3,
+          red: Math.random() < 0.12
+        });
+      }
+      (function drift() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var k = 0; k < parts.length; k += 1) {
+          var q = parts[k];
+          q.y -= q.v;
+          q.x += q.v * 0.25;
+          if (q.y < -6) { q.y = canvas.height + 6; q.x = Math.random() * canvas.width; }
+          if (q.x > canvas.width + 6) { q.x = -6; }
+          ctx.fillStyle = q.red ? "rgba(227, 6, 19, 0.16)" : "rgba(128, 132, 136, 0.12)";
+          ctx.fillRect(q.x, q.y, q.s, q.s);
+        }
+        requestAnimationFrame(drift);
+      })();
+    }
+
+    /* ---------- terminal demo ---------- */
+    var body = document.getElementById("termbody");
+    var state = document.getElementById("termstate");
+    var SCENES = [
+      { cmd: "@cos plan my day",
+        out: ["Two things move your quarter today: the board deck, and the 15:30 with Weber.",
+              "The 14:00 can be an email. Prep notes for Weber are ready, one page.",
+              "Everything else is noise wearing a calendar invite."] },
+      { cmd: "@ghost draft: decline the vendor. politely, but final.",
+        out: ["Done. DRAFTS/vendor-no.md, four sentences, your greeting, your sign-off.",
+              "It sounds like you on a good day: short, warm, immovable.",
+              "It will not send itself. That button is yours."] },
+      { cmd: "$env:TUESDAY_VOICE = \"1\"",
+        out: ["[voice: on] I will read my answers aloud from now on:",
+              "English, Polish or German, whichever language you write to me in."],
+        voiceAfter: true },
+      { cmd: "@life jak późno jest, tak szczerze?",
+        out: ["Jest 22:47, a o 22:00 obiecywałeś, że kończysz.",
+              "Szklanka wody, laptop na jutro. Deck i tak będzie świetny."],
+        speak: "speaking aloud · pl-PL" }
+    ];
+    function el(cls, html) {
+      var d = document.createElement("div");
+      d.className = "tline " + cls;
+      d.innerHTML = html;
+      return d;
+    }
+    if (body && reduced) {
+      state.textContent = "transcript";
+      SCENES.forEach(function (sc) {
+        body.appendChild(el("", '<span class="tprompt">&gt;</span> <span class="tcmd">' + sc.cmd.replace(/</g, "&lt;") + "</span>"));
+        sc.out.forEach(function (o) { body.appendChild(el("tout", o)); });
+      });
+    } else if (body) {
+      var si = 0;
+      function typeCmd(sc, done) {
+        var line = el("", '<span class="tprompt">&gt;</span> <span class="tcmd"></span><span class="cursor"></span>');
+        body.appendChild(line);
+        var target = line.querySelector(".tcmd");
+        var ci = 0;
+        (function step() {
+          if (ci <= sc.cmd.length) {
+            target.textContent = sc.cmd.slice(0, ci);
+            ci += 1;
+            setTimeout(step, 34 + Math.random() * 40);
+          } else {
+            var c = line.querySelector(".cursor");
+            if (c) { c.remove(); }
+            done();
+          }
+        })();
+      }
+      function printOut(sc, done) {
+        var oi = 0;
+        (function next() {
+          if (oi < sc.out.length) {
+            body.appendChild(el("tout", sc.out[oi]));
+            oi += 1;
+            setTimeout(next, 520);
+          } else {
+            if (sc.voiceAfter || sc.speak) {
+              var w = el("tout tok", (sc.speak || "voice ready") +
+                ' <span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i></span>');
+              body.appendChild(w);
+            }
+            done();
+          }
+        })();
+      }
+      (function play() {
+        if (si >= SCENES.length) {
+          si = 0;
+          setTimeout(function () { body.innerHTML = ""; play(); }, 3600);
+          return;
+        }
+        var sc = SCENES[si];
+        si += 1;
+        typeCmd(sc, function () {
+          setTimeout(function () {
+            printOut(sc, function () {
+              body.scrollTop = body.scrollHeight;
+              setTimeout(play, 1900);
+            });
+          }, 420);
+        });
+      })();
+    }
+
+    /* ---------- ghost: entropy flicker vs your voice ---------- */
+    var noisy = document.getElementById("entropy");
+    if (noisy && !reduced) {
+      var original = noisy.textContent;
+      var GLYPHS = "abcdefghijklmnopqrstuvwxyz#$%&?~";
+      setInterval(function () {
+        var chars = original.split("");
+        for (var n = 0; n < 5; n += 1) {
+          var idx = Math.floor(Math.random() * chars.length);
+          if (chars[idx] !== " " && chars[idx] !== "\n") {
+            chars[idx] = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          }
+        }
+        noisy.textContent = chars.join("");
+      }, 140);
+    }
+    var yours = document.getElementById("ghosttype");
+    var YOURS_TEXT = "Marek, three things, then I stop bothering you.\n\n" +
+      "The deadline holds. Not because I enjoy saying no, but because the line behind it does not move either.\n\n" +
+      "Send me the numbers by Thursday and I will handle the board myself.\n\n" +
+      "P.";
+    if (yours && reduced) { yours.textContent = YOURS_TEXT; }
+    else if (yours) {
+      var typed = false;
+      var io2 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !typed) {
+            typed = true;
+            io2.unobserve(yours);
+            var yi = 0;
+            (function tw() {
+              if (yi <= YOURS_TEXT.length) {
+                yours.textContent = YOURS_TEXT.slice(0, yi);
+                yi += 1;
+                setTimeout(tw, 18);
+              }
+            })();
+          }
+        });
+      }, { threshold: 0.4 });
+      io2.observe(yours);
+    }
   })();
 </script>
 
