@@ -81,8 +81,10 @@
     font-variant-numeric: tabular-nums;
   }
   #bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--red); z-index: 6; will-change: width; }
   .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
   a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 
   /* ---------- top bar ---------- */
   .topbar {
@@ -109,7 +111,7 @@
     margin: 0 0 26px; text-wrap: balance;
   }
   h1 em { font-style: normal; color: var(--red); }
-  p.lede { font-size: 17px; max-width: 38em; margin: 0 0 18px; }
+  p.lede { font-size: 17px; max-width: 38em; margin: 0 0 18px; text-wrap: pretty; }
   .stagger { opacity: 0; transform: translateY(14px); animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
   .stagger.d1 { animation-delay: 0.05s; }
   .stagger.d2 { animation-delay: 0.22s; }
@@ -127,7 +129,7 @@
   .sechead { display: flex; align-items: baseline; gap: 18px; margin-bottom: 18px; }
   .secnum { font-weight: 900; font-size: 13px; color: var(--red); letter-spacing: 0.1em; }
   h2 { font-size: clamp(24px, 3.4vw, 38px); font-weight: 900; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
-  .seclede { font-size: 16px; max-width: 46em; margin: 0 0 40px; color: var(--rail); }
+  .seclede { font-size: 16px; max-width: 46em; margin: 0 0 40px; color: var(--rail); text-wrap: pretty; }
   .seclede b { color: var(--ink); font-weight: 700; }
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.in { opacity: 1; transform: none; }
@@ -394,11 +396,12 @@
 </style>
 
 <canvas id="bg" aria-hidden="true"></canvas>
+<div id="progress" aria-hidden="true"></div>
 
 <div class="wrap">
   <div class="topbar">
     <div class="wordmark">TUESDAY<span>.</span></div>
-    <div class="topmeta mono">EN · DE (CH) · PL &nbsp;/&nbsp; runs on Claude Code &nbsp;/&nbsp; your machine only</div>
+    <div class="topmeta mono">EN · DE (CH) &nbsp;/&nbsp; runs on Claude Code &nbsp;/&nbsp; your machine only</div>
   </div>
 
   <div class="hero">
@@ -435,7 +438,7 @@
   <section>
     <div class="sechead"><span class="secnum mono">01</span><h2>The whole interface is a conversation</h2></div>
     <p class="seclede">No app, no dashboard. You type, or you simply <b>speak</b>, and the staff plans, drafts,
-      logs and declines; with voice on, Tuesday answers out loud in English, Polish or German.</p>
+      logs and declines; with voice on, Tuesday answers out loud in your own language.</p>
     <div class="term reveal">
       <div class="termbar mono"><span><span class="dot"></span>tuesday · claude</span><span id="termstate">live demo</span></div>
       <div class="termbody mono" id="termbody"></div>
@@ -735,6 +738,23 @@ you soon.</div>
   (function () {
     var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    /* ---------- scroll progress bar ---------- */
+    var progress = document.getElementById("progress");
+    if (progress) {
+      var ticking = false;
+      function updateProgress() {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+        progress.style.width = pct + "%";
+        ticking = false;
+      }
+      window.addEventListener("scroll", function () {
+        if (!ticking) { window.requestAnimationFrame(updateProgress); ticking = true; }
+      }, { passive: true });
+      updateProgress();
+    }
+
     /* ---------- railway clock ---------- */
     var NS = "http://www.w3.org/2000/svg";
     var ticks = document.getElementById("ticks");
@@ -820,13 +840,13 @@ you soon.</div>
               "It sounds like you on a good day: short, warm, immovable.",
               "It will not send itself. That button is yours."] },
       { cmd: "$env:TUESDAY_VOICE = \"1\"",
-        out: ["[voice: on] I will read my answers aloud from now on:",
-              "English, Polish or German, whichever language you write to me in."],
+        out: ["[voice: on] I will read my answers aloud from now on,",
+              "in whichever language you write to me in."],
         voiceAfter: true },
-      { cmd: "@life jak późno jest, tak szczerze?",
-        out: ["Jest 22:47, a o 22:00 obiecywałeś, że kończysz.",
-              "Szklanka wody, laptop na jutro. Deck i tak będzie świetny."],
-        speak: "speaking aloud · pl-PL" }
+      { cmd: "@life wie spät ist es, ehrlich?",
+        out: ["Es ist 22:47, und um zehn wolltest du Schluss machen.",
+              "Ein Glas Wasser, Laptop zu. Der Pitch steht auch morgen."],
+        speak: "speaking aloud · de-CH" }
     ];
     function el(cls, html) {
       var d = document.createElement("div");
@@ -908,7 +928,7 @@ you soon.</div>
       }, 140);
     }
     var yours = document.getElementById("ghosttype");
-    var YOURS_TEXT = "Marek,\n\n" +
+    var YOURS_TEXT = "Daniel,\n\n" +
       "The deadline stays.\n\n" +
       "Send me the numbers by Thursday and the board is my problem, not yours. " +
       "You're doing good work. Don't slow down now.\n\n" +
