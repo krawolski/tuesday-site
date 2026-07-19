@@ -87,6 +87,16 @@
     animation: griddrift 60s linear infinite;
   }
   @keyframes griddrift { to { transform: translate(46px, 46px); } }
+  #train {
+    position: fixed; top: 42%; left: 0; width: 100%; height: 40px;
+    z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  #train svg { position: absolute; top: 0; left: 0; opacity: 0.18; transform: translateX(-340px); }
+  #train.go svg { animation: trainpass 1.15s cubic-bezier(0.45, 0, 0.5, 1) forwards; }
+  @keyframes trainpass {
+    0% { transform: translateX(-340px); }
+    100% { transform: translateX(calc(100vw + 60px)); }
+  }
   #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--red); z-index: 6; will-change: width; }
   .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
   a { color: inherit; }
@@ -427,6 +437,7 @@
     .orb .ring { animation: none; opacity: 0.4; transform: scale(1.4); }
     .orb .eq i { animation: none; height: 24px; }
     #bg { animation: none; }
+    #train { display: none; }
   }
 
   /* ---------- mobile ---------- */
@@ -453,6 +464,29 @@
 
 <div id="bg" aria-hidden="true"></div>
 <div id="progress" aria-hidden="true"></div>
+<div id="train" aria-hidden="true">
+  <svg viewBox="0 0 300 40" width="300" height="40" xmlns="http://www.w3.org/2000/svg">
+    <rect x="196" y="10" width="96" height="24" rx="4" fill="var(--red)"></rect>
+    <rect x="204" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <rect x="222" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <rect x="240" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <rect x="100" y="10" width="90" height="24" rx="4" fill="var(--red)"></rect>
+    <rect x="108" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <rect x="126" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <rect x="144" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <path d="M0 34 L4 14 Q6 10 14 10 L88 10 Q94 10 94 16 L94 34 Z" fill="var(--red)"></path>
+    <rect x="12" y="15" width="14" height="11" rx="1" fill="var(--paper)"></rect>
+    <rect x="34" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <rect x="52" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <rect x="70" y="15" width="12" height="10" rx="1" fill="var(--paper)"></rect>
+    <circle cx="118" cy="36" r="3" fill="var(--ink)"></circle>
+    <circle cx="168" cy="36" r="3" fill="var(--ink)"></circle>
+    <circle cx="214" cy="36" r="3" fill="var(--ink)"></circle>
+    <circle cx="264" cy="36" r="3" fill="var(--ink)"></circle>
+    <circle cx="40" cy="36" r="3" fill="var(--ink)"></circle>
+    <circle cx="70" cy="36" r="3" fill="var(--ink)"></circle>
+  </svg>
+</div>
 
 <div class="wrap">
   <div class="topbar">
@@ -662,7 +696,7 @@ you soon.</div>
       and it stays one.</p>
   </section>
 
-  <section>
+  <section id="installsec">
     <div class="sechead"><span class="secnum mono">04</span><h2>From clone to twin, in one afternoon</h2></div>
     <p class="seclede">The system is a git repository, so installing, updating and owning it are the same
       operation. The dot is you.</p>
@@ -833,6 +867,27 @@ you soon.</div>
       updateProgress();
     }
 
+    /* ---------- train pass on reaching the install section ---------- */
+    var train = document.getElementById("train");
+    var installsec = document.getElementById("installsec");
+    if (train && installsec && !reduced) {
+      var trainSvg = train.querySelector("svg");
+      if (trainSvg) {
+        trainSvg.addEventListener("animationend", function () { train.classList.remove("go"); });
+      }
+      var armed = true;
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && armed) {
+            armed = false;
+            train.classList.add("go");
+          } else if (!e.isIntersecting) {
+            armed = true;
+          }
+        });
+      }, { threshold: 0.35 }).observe(installsec);
+    }
+
     /* ---------- voice orb state cycle ---------- */
     var orb = document.getElementById("orb");
     var vstate = document.getElementById("voicestate");
@@ -988,11 +1043,11 @@ you soon.</div>
       }, 140);
     }
     var yours = document.getElementById("ghosttype");
-    var YOURS_TEXT = "Daniel,\n\n" +
+    var YOURS_TEXT = "Thomas,\n\n" +
       "The deadline stays.\n\n" +
       "Send me the numbers by Thursday and the board is my problem, not yours. " +
       "You're doing good work. Don't slow down now.\n\n" +
-      "P.";
+      "Daniel";
     if (yours && reduced) { yours.textContent = YOURS_TEXT; }
     else if (yours) {
       var typed = false;
