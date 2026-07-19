@@ -340,6 +340,52 @@
   .gitignore .c { opacity: 0.55; }
   .gitignore .r { color: var(--red); font-weight: 700; }
 
+  /* ---------- voice device (roadmap) ---------- */
+  .roadtag {
+    display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--red); border: 1px solid var(--red);
+    padding: 3px 10px; margin-bottom: 18px;
+  }
+  .voicewrap { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 26px 0 8px; }
+  .orb { position: relative; width: 280px; height: 220px; display: grid; place-items: center; }
+  .orb .ring {
+    position: absolute; width: 130px; height: 130px; border: 2px solid var(--red);
+    border-radius: 50%; opacity: 0; transform: scale(0.6);
+    animation: emit 3.2s ease-out infinite;
+  }
+  .orb .ring.d2 { animation-delay: 1.06s; }
+  .orb .ring.d3 { animation-delay: 2.13s; }
+  @keyframes emit {
+    0% { transform: scale(0.6); opacity: 0.7; }
+    100% { transform: scale(2.0); opacity: 0; }
+  }
+  .orb .core {
+    position: relative; width: 140px; height: 140px; border-radius: 50%;
+    background: var(--ink); display: grid; place-items: center;
+    box-shadow: 0 14px 44px rgba(227, 6, 19, 0.22); z-index: 1;
+  }
+  .orb .eq { display: flex; gap: 5px; align-items: center; height: 52px; }
+  .orb .eq i { width: 5px; height: 12px; background: var(--paper); border-radius: 2px; animation: eq 1s ease-in-out infinite; }
+  .orb .eq i:nth-child(1) { animation-delay: 0s; }
+  .orb .eq i:nth-child(2) { animation-delay: 0.16s; }
+  .orb .eq i:nth-child(3) { animation-delay: 0.32s; }
+  .orb .eq i:nth-child(4) { animation-delay: 0.48s; }
+  .orb .eq i:nth-child(5) { animation-delay: 0.64s; }
+  .orb .eq i:nth-child(6) { animation-delay: 0.8s; }
+  .orb .eq i:nth-child(7) { animation-delay: 0.96s; }
+  @keyframes eq { 0%, 100% { height: 10px; } 50% { height: 42px; } }
+  .orb[data-state="thinking"] .eq i { animation-duration: 2.1s; opacity: 0.45; }
+  .orb[data-state="thinking"] .ring { animation-play-state: paused; }
+  .orb[data-state="speaking"] .eq i { animation-duration: 0.62s; }
+  .voicestate {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rail);
+    min-height: 16px;
+  }
+  .voicestate b { color: var(--red); font-weight: 700; }
+  .voicesteps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 34px; }
+  .vstep { font-size: 14.5px; }
+  .vk { color: var(--red); font-weight: 700; margin-right: 8px; }
+
   /* ---------- cta ---------- */
   .cta { text-align: left; padding: 84px 0 60px; border-bottom: none; }
   .cta h2 { font-size: clamp(30px, 4.6vw, 52px); margin-bottom: 22px; }
@@ -372,6 +418,8 @@
     .archmap .flowline { animation: none !important; opacity: 0.4 !important; }
     .archmap .fade, .rings .ring, .layer { opacity: 1 !important; transform: none !important; transition: none !important; }
     .termbody { height: auto; overflow: visible; }
+    .orb .ring { animation: none; opacity: 0.4; transform: scale(1.4); }
+    .orb .eq i { animation: none; height: 24px; }
   }
 
   /* ---------- mobile ---------- */
@@ -392,6 +440,7 @@
     .member { padding: 22px 18px; }
     .gitignore { font-size: 11.5px; }
     .layer { grid-template-columns: 26px 1fr; gap: 12px; font-size: 13.5px; }
+    .voicesteps { grid-template-columns: 1fr; gap: 16px; }
   }
 </style>
 
@@ -721,6 +770,28 @@ you soon.</div>
     </div>
   </div>
 
+  <section>
+    <div class="sechead"><span class="secnum mono">09</span><h2>On the roadmap: a voice on your desk</h2></div>
+    <p class="seclede"><span class="roadtag">In development</span><br>Today Tuesday speaks from your terminal. Next
+      it leaves the screen: a quiet device on your desk you talk to across the room. It briefs you while you knot
+      your tie and drafts while you pace. Same private staff, same files on your own machine. <b>Eyes up, hands
+      free.</b></p>
+    <div class="voicewrap reveal">
+      <div class="orb" id="orb" data-state="listening" aria-hidden="true">
+        <span class="ring"></span><span class="ring d2"></span><span class="ring d3"></span>
+        <span class="core"><span class="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
+      </div>
+      <div class="voicestate mono" id="voicestate">listening</div>
+    </div>
+    <div class="voicesteps reveal">
+      <div class="vstep"><span class="vk mono">01</span>You ask out loud, from anywhere in the room.</div>
+      <div class="vstep"><span class="vk mono">02</span>It thinks on your own machine. No always-on cloud microphone.</div>
+      <div class="vstep"><span class="vk mono">03</span>It answers aloud, and the draft waits on your screen for you.</div>
+    </div>
+    <p class="cnote">The voice you can use <b>today</b> reads Tuesday's answers aloud in your terminal. The desk
+      device is where it is heading, and it will hold the same line: your words stay on your machine.</p>
+  </section>
+
   <section class="cta">
     <div class="eyebrow reveal">The wave is here either way</div>
     <h2 class="reveal">Grab the board.</h2>
@@ -753,6 +824,23 @@ you soon.</div>
         if (!ticking) { window.requestAnimationFrame(updateProgress); ticking = true; }
       }, { passive: true });
       updateProgress();
+    }
+
+    /* ---------- voice orb state cycle ---------- */
+    var orb = document.getElementById("orb");
+    var vstate = document.getElementById("voicestate");
+    if (orb && vstate && !reduced) {
+      var STATES = [
+        { s: "listening", label: "listening" },
+        { s: "thinking", label: "thinking" },
+        { s: "speaking", label: "<b>speaking</b>" }
+      ];
+      var vi = 0;
+      setInterval(function () {
+        vi = (vi + 1) % STATES.length;
+        orb.setAttribute("data-state", STATES[vi].s);
+        vstate.innerHTML = STATES[vi].label;
+      }, 2600);
     }
 
     /* ---------- railway clock ---------- */
