@@ -80,7 +80,13 @@
     font-family: ui-monospace, "Cascadia Mono", Consolas, "IBM Plex Mono", monospace;
     font-variant-numeric: tabular-nums;
   }
-  #bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  #bg {
+    position: fixed; inset: -60px; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(circle, var(--hairline) 1px, transparent 1.6px);
+    background-size: 46px 46px; opacity: 0.7;
+    animation: griddrift 60s linear infinite;
+  }
+  @keyframes griddrift { to { transform: translate(46px, 46px); } }
   #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--red); z-index: 6; will-change: width; }
   .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
   a { color: inherit; }
@@ -420,6 +426,7 @@
     .termbody { height: auto; overflow: visible; }
     .orb .ring { animation: none; opacity: 0.4; transform: scale(1.4); }
     .orb .eq i { animation: none; height: 24px; }
+    #bg { animation: none; }
   }
 
   /* ---------- mobile ---------- */
@@ -444,7 +451,7 @@
   }
 </style>
 
-<canvas id="bg" aria-hidden="true"></canvas>
+<div id="bg" aria-hidden="true"></div>
 <div id="progress" aria-hidden="true"></div>
 
 <div class="wrap">
@@ -879,41 +886,6 @@ you soon.</div>
       });
     }, { threshold: 0.15 });
     document.querySelectorAll(".reveal, .row, #cascade, .anim-scope").forEach(function (el) { io.observe(el); });
-
-    /* ---------- background: drifting swiss confetti ---------- */
-    var canvas = document.getElementById("bg");
-    if (canvas && !reduced) {
-      var ctx = canvas.getContext("2d");
-      var parts = [];
-      function sizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      sizeCanvas();
-      window.addEventListener("resize", sizeCanvas);
-      for (var p = 0; p < 70; p += 1) {
-        parts.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          v: 0.15 + Math.random() * 0.45,
-          s: 2 + Math.random() * 3,
-          red: Math.random() < 0.12
-        });
-      }
-      (function drift() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (var k = 0; k < parts.length; k += 1) {
-          var q = parts[k];
-          q.y -= q.v;
-          q.x += q.v * 0.25;
-          if (q.y < -6) { q.y = canvas.height + 6; q.x = Math.random() * canvas.width; }
-          if (q.x > canvas.width + 6) { q.x = -6; }
-          ctx.fillStyle = q.red ? "rgba(227, 6, 19, 0.16)" : "rgba(128, 132, 136, 0.12)";
-          ctx.fillRect(q.x, q.y, q.s, q.s);
-        }
-        requestAnimationFrame(drift);
-      })();
-    }
 
     /* ---------- terminal demo ---------- */
     var body = document.getElementById("termbody");
